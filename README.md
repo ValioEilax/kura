@@ -30,6 +30,6 @@
 
 ## Kehitys ja testaus
 
-* **Projektin seuranta:** Voit seurata kehityksen vaiheita ja tulevia ominaisuuksia [TODO.md-tiedostosta](TODO.md).
+* **Projektin seuranta:** Voit seurata kehityksen vaiheita ja tulevia ominaisuuksia [TODO.md-tiedostosta]([TODO.md](https://github.com/ValioEilax/kura/blob/main/todo.md)).
 * **Pylint:** Lopullinen Pylint-raportti ja selitykset mahdollisista huomautuksista lisätään tiedostoon `pylint-report.md` sovelluksen valmistuttua.
 * **Suuren tietomäärän testaus:** Testaustulokset, suorituskykyanalyysi ja SQL-indeksien vaikutus raportoidaan tiedostossa `testing-report.md` projektin loppuvaiheessa.
