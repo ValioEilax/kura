@@ -1,6 +1,6 @@
 # Kura - Kurssien Rehelliset Arvostelut
 
-**Kura** on verkkosovellus, jonka avulla opiskelijat voivat etsiä, arvostella ja vertailla yliopistokursseja. Sovelluksen keskiössä on opiskelijoiden tuottama rehellinen tieto: vastaako kurssin työmäärä opintopisteitä ja kuinka haastava kurssi todellisuudessa on.
+**Kura** on verkkosovellus, jonka avulla opiskelijat voivat lisätä ja jakaa kurssiarvosteluja sekä etsiä muiden kokemuksia. Sovelluksen keskiössä on opiskelijoiden tuottama rehellinen tieto: vastaako kurssin työmäärä opintopisteitä, kuinka haastava kurssi todellisuudessa on ja mikä on sen yleinen arvosana muiden opiskelijoiden silmissä.
 
 ## Tulossa olevat toiminnot
 
