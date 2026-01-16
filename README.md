@@ -7,9 +7,11 @@
 ### Perusominaisuudet (Arvosana 3)
 * **Käyttäjienhallinta:** Käyttäjä voi luoda tunnuksen, kirjautua sisään ja hallinnoida omaa profiiliaan.
 * **Kurssien hallinta:** Käyttäjät voivat lisätä uusia kursseja (nimi, koodi, opintopisteet) sekä muokata tai poistaa omia lisäyksiään.
-* **Arvostelut (toissijaiset tietokohteet):** Käyttäjät voivat jättää kursseista arvosteluja, jotka sisältävät numeerisia arvioita (yleisarvosana, vaikeus, työmäärän vastaavuus) ja sanallista palautetta.
-* **Haku ja suodatus:** Kursseja voi etsiä hakusanalla tai suodattaa luokittelun (kategorioiden) perusteella.
 * **Käyttäjäsivu ja tilastot:** Käyttäjä näkee omat suorituksensa ja tilastoja sovelluksen käytöstä.
+* **Haku ja suodatus:** Kursseja voi etsiä hakusanalla tai suodattaa luokittelun (kategorioiden) perusteella.
+* **Arvostelut (toissijaiset tietokohteet):** Käyttäjät voivat jättää kursseista arvosteluja, jotka sisältävät numeerisia arvioita (yleisarvosana, vaikeus, työmäärän vastaavuus) ja sanallista palautetta.
+
+
 
 ## Lisäominaisuudet (Arvosanat 4 ja 5)
 * **Sosiaalinen syöte (Feed):** Käyttäjä voi seurata muita käyttäjiä ja nähdä heidän tuoreimmat arvostelunsa omalla etusivullaan.
