@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kurssin poisto</title>
+  </head>
+  <body>
+    <h1>Kurssin poisto</h1>
+    <p>Kurssi: {{ course.name }}</p>
+    <p>Haluatko varmasti poistaa tämän kurssin?</p>
+    <form action="/remove_course/{{ course.id }}" method="post">
+      <input type="submit" name="remove" value="Poista kurssi" />
+      <input type="submit" name="back" value="Palaa takaisin" />
+    </form>
+  </body>
+</html>

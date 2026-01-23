@@ -40,6 +40,21 @@ def edit_course(course_id):
     course = courses.get_course(course_id)
     return render_template("edit_course.html", course=course)
 
+@app.route("/remove_course/<int:course_id>", methods=["GET", "POST"])
+def remove_course(course_id):
+    if request.method == "GET":
+        course = courses.get_course(course_id)
+        return render_template("remove_course.html", course=course)
+    
+    if request.method == "POST":
+        if "remove" in request.form:
+            courses.remove_course(course_id)
+            return redirect("/")
+        else:
+            return redirect("/course/" + str(course_id))
+    
+
+
 @app.route("/create_course", methods=["POST"])
 def create_course():
     name = request.form["name"]

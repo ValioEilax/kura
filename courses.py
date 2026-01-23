@@ -31,4 +31,7 @@ def update_course(course_id, name, code, grade, credits):
     # Suorita kysely tietokannassa
     db.execute(sql, [name, code, grade, credits, course_id])
     
+def remove_course(course_id):
+    sql = "DELETE FROM courses WHERE id = ?"
+    db.execute(sql, [course_id])   
     
