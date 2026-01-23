@@ -5,6 +5,14 @@
   </head>
   <body>
     <h1>{{ course.name }}</h1>
+    {% if session.user_id == course.user_id %}
+
+    <p>
+      <a href="/edit_course/{{ course.id }}">Muokkaa kurssia</a>
+    </p>
+    {% endif %}
+
+    <p><strong>Koodi:</strong> {{ course.id }}</p>
     <p><strong>Koodi:</strong> {{ course.code }}</p>
     <p><strong>Arvosana:</strong> {{ course.grade }}</p>
     <p><strong>Opintopisteet:</strong> {{ course.credits }}</p>

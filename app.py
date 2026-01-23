@@ -22,6 +22,24 @@ def show_course(course_id):
 def new_course():
     return render_template("new_course.html")
 
+@app.route("/update_course", methods=["POST"])
+def update_course():
+    course_id = request.form["course_id"]
+    name = request.form["name"]
+    code = request.form["code"]
+    credits = request.form["credits"]
+    grade = request.form["grade"]
+    user_id = session["user_id"]
+    
+    courses.update_course(course_id, name, code, grade, credits)
+    
+    return redirect("/course/" + str(course_id))
+
+@app.route("/edit_course/<int:course_id>")
+def edit_course(course_id):
+    course = courses.get_course(course_id)
+    return render_template("edit_course.html", course=course)
+
 @app.route("/create_course", methods=["POST"])
 def create_course():
     name = request.form["name"]

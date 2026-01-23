@@ -10,13 +10,25 @@ def get_courses():
     return db.query(sql)
 
 def get_course(course_id):
-    sql = """SELECT courses.name,
+    sql = """SELECT courses.id,
+                    courses.name,
                     courses.code,
                     courses.grade,
                     courses.credits,
+                    users.id user_id,
                     users.username
             FROM courses, users
             WHERE courses.user_id = users.id AND
                   courses.id = ?"""
     
     return db.query(sql, [course_id])[0]
+
+def update_course(course_id, name, code, grade, credits):
+    sql = """UPDATE courses 
+             SET name = ?, code = ?, grade = ?, credits = ? 
+             WHERE id = ?"""
+    
+    # Suorita kysely tietokannassa
+    db.execute(sql, [name, code, grade, credits, course_id])
+    
+    
