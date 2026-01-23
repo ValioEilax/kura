@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lisää uusi kurssi</title>
+  </head>
+
+  <body>
+    <form action="/create_course" method="post">
+      <p>
+        Kurssin nimi: <br />
+        <input type="text" name="name" />
+      </p>
+      <p>
+        Kurssin koodi: <br />
+        <input type="text" name="code" />
+      </p>
+      <p>
+        Opintopisteet: <br />
+        <input type="integer" name="credits" />
+      </p>
+      <input type="submit" value="Luo uusi kurssi" />
+    </form>
+  </body>
+</html>
