@@ -9,7 +9,7 @@ CREATE TABLE courses (
     name TEXT,
     code TEXT,
     credits INTEGER,
-    grade INTEGER
+    grade INTEGER,
     user_id INTEGER REFERENCES users
 );
 
@@ -18,6 +18,6 @@ CREATE TABLE reviews (
     difficulty INTEGER,
     workload INTEGER,
     grade INTEGER,
-    feedback TEXT
+    feedback TEXT,
     user_id INTEGER REFERENCES users
 );
