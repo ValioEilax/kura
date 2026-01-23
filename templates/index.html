@@ -6,7 +6,10 @@
   <body>
     <h1>Kura - Kurssien Rehelliset Arvostelut</h1>
     {% if session.username %}
-    <p>Olet kirjautunut nimellä {{ session.username }}</p>
+    <p>
+      Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{
+      session.user_id }}
+    </p>
     {% endif %}
 
     <p>
