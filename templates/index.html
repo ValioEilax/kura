@@ -22,8 +22,11 @@
       <a href="/new_course">Lisää kurssi</a>
     </p>
 
-    <p>
-      <a href="/my_courses">Omat kurssit</a>
-    </p>
+    <h2>Lisätyt kurssit</h2>
+    <ul>
+      {% for course in courses %}
+      <li><a href="/course/{{ course.id }}">{{ course.name }}</li> 
+      {% endfor %}
+    </ul>
   </body>
 </html>

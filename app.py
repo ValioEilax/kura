@@ -10,7 +10,13 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_courses = courses.get_courses()
+    return render_template("index.html", courses=all_courses)
+
+@app.route("/course/<int:course_id>")
+def show_course(course_id):
+    course = courses.get_course(course_id)
+    return render_template("show_course.html", course=course)
 
 @app.route("/new_course")
 def new_course():
