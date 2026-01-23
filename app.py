@@ -3,7 +3,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import config
-import db
+import db, courses
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -21,10 +21,10 @@ def create_course():
     name = request.form["name"]
     code = request.form["code"]
     credits = request.form["credits"]
+    grade = request.form["grade"]
     user_id = session["user_id"]
     
-    sql = "INSERT INTO courses (name, code, credits, user_id) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [name, code, credits, user_id])
+    courses.add_course(name, code, grade, credits, user_id)
     
     return redirect("/")
 
@@ -70,6 +70,8 @@ def login():
             return redirect("/")
         else:
             return "VIRHE: väärä tunnus tai salasana"
+        
+@app.route("/my_courses")
     
 
 @app.route("/logout")
