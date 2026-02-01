@@ -35,3 +35,11 @@ def remove_course(course_id):
     sql = "DELETE FROM courses WHERE id = ?"
     db.execute(sql, [course_id])   
     
+def find_courses(query):
+    sql = """SELECT id, name, code
+             FROM courses
+             WHERE name LIKE ? OR code LIKE ?
+             ORDER BY id DESC"""
+    pattern = "%" + query + "%"
+    return db.query(sql, [pattern, pattern])
+    

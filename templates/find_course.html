@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Etsi kurssi</title>
+  </head>
+  <body>
+    <h1>Etsi kurssi</h1>
+
+    <form action="/find_course" method="get">
+      <p>Hakusana: <input type="text" name="query" value="{{ query }}" /></p>
+      <input type="submit" value="Lähetä" />
+    </form>
+    {% if query %}
+    <h2>Tulokset</h2>
+
+    <ul>
+      {% for course in results %}
+      <li>
+        <a href="/course/{{ course.id }}">
+          <strong>{{ course.code }}</strong> {{ course.name }}
+        </a>
+      </li>
+      {% else %}
+      <li>Ei tuloksia hakusanalla.</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <p>
+      <a href="/">Takaisin etusivulle</a>
+    </p>
+  </body>
+</html>

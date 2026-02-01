@@ -13,6 +13,16 @@ def index():
     all_courses = courses.get_courses()
     return render_template("index.html", courses=all_courses)
 
+@app.route("/find_course")
+def find_course():
+    query = request.args.get("query")
+    if query:
+        results = courses.find_courses(query)
+    else:
+        query = ""
+        results = []
+    return render_template("find_course.html", query=query, results=results)
+
 @app.route("/course/<int:course_id>")
 def show_course(course_id):
     course = courses.get_course(course_id)
