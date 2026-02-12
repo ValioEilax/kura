@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import redirect, render_template, request, session,flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import config
 import db, courses
@@ -64,7 +64,6 @@ def remove_course(course_id):
             return redirect("/course/" + str(course_id))
     
 
-
 @app.route("/create_course", methods=["POST"])
 def create_course():
     name = request.form["name"]
@@ -96,7 +95,8 @@ def create():
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
     
-    return "Tunnus luotu onnistuneesti!"
+    flash("Tunnus luotu onnistuneesti! Voit nyt kirjautua sisään.")
+    return redirect("/login")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

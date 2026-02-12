@@ -1,34 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <title>Kirjautuminen</title>
-  </head>
 
-  <body>
-    {% if session.username %}
-    <p>
-      Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{
-      session.id }}
-    </p>
-    <p>
-      <a href="/logout">Kirjaudu ulos</a>
-    </p>
-    {% else %}
-    <form action="/login" method="post">
-      <p>
-        Tunnus: <br />
-        <input type="text" name="username" />
-      </p>
-      <p>
-        Salasana: <br />
-        <input type="password" name="password" />
-      </p>
-      <input type="submit" value="Kirjaudu" />
-    </form>
+<head>
+  <title>Kirjautuminen</title>
+</head>
+
+<body>
+  <h2>Kirjaudu sisään</h2>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <p style="color: green;"><b>{{ message }}</b></p>
+      {% endfor %}
     {% endif %}
+  {% endwith %}
 
+  {% if session.username %}
+  <p>
+    Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{
+    session.id }}
+  </p>
+  <p>
+    <a href="/logout">Kirjaudu ulos</a>
+  </p>
+  {% else %}
+  <form action="/login" method="post">
     <p>
-      <a href="/">Takaisin etusivulle</a>
+      Tunnus: <br />
+      <input type="text" name="username" />
     </p>
-  </body>
+    <p>
+      Salasana: <br />
+      <input type="password" name="password" />
+    </p>
+    <input type="submit" value="Kirjaudu" />
+  </form>
+  {% endif %}
+
+  <p>
+    <a href="/">Takaisin etusivulle</a>
+  </p>
+</body>
+
 </html>
