@@ -8,14 +8,10 @@
 <body>
   <h2>Kirjaudu sisään</h2>
 
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-        <p style="color: green;"><b>{{ message }}</b></p>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-
+  {%- for message in get_flashed_messages() -%}
+    <p><b>{{ message }}</b></p>
+  {%- endfor -%}
+  
   {% if session.username %}
   <p>
     Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{
