@@ -5,20 +5,25 @@
   </head>
   <body>
     <h1>{{ course.name }}</h1>
+
+    {%- for message in get_flashed_messages() -%}
+      <p><b>{{ message }}</b></p>
+    {%- endfor -%}
+
     {% if session.user_id == course.user_id %}
 
     <p>
       <a href="/edit_course/{{ course.id }}">Muokkaa kurssia</a>
+      <a href="/course/{{ course.id }}/new_review" class="button">Luo arvostelu</a>
       <a href="/remove_course/{{ course.id }}">Poista kurssi</a>
     </p>
     {% endif %}
 
-    <p><strong>Koodi:</strong> {{ course.id }}</p>
-    <p><strong>Koodi:</strong> {{ course.code }}</p>
-    <p><strong>Arvosana:</strong> {{ course.grade }}</p>
-    <p><strong>Opintopisteet:</strong> {{ course.credits }} op</p>
-    <p><strong>Lisännyt käyttäjä:</strong> {{ course.username }}</p>
-    <p>
+      <p><strong>Koodi:</strong> {{ course.id }}</p>
+      <p><strong>Koodi:</strong> {{ course.code }}</p>
+      <p><strong>Arvosana:</strong> {{ course.grade }}</p>
+      <p><strong>Opintopisteet:</strong> {{ course.credits }} op</p>
+      <p><strong>Lisännyt käyttäjä:</strong> {{ course.username }}</p>
       <a href="/">Takaisin etusivulle</a>
     </p>
   </body>

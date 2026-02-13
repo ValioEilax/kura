@@ -35,5 +35,16 @@
     {% else %}
       <p>Ei lisättyjä kursseja</p>
     {% endif %}
+
+        <h2>Kaikki arvostelut</h2>
+    {% if reviews %}
+      <ul>
+        {% for review in reviews %}
+          <li><a href="/review/{{ review.id }}">{{ review.course_name}} - {{ review.reviewer_name}} {{"★"* review.rating }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Ei vielä arvosteluja kursseista</p>
+    {% endif %}
   </body>
 </html>

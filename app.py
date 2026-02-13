@@ -1,9 +1,9 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session,flash
+from flask import redirect, render_template, request, session, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 import config
-import db, courses
+import db, courses, reviews
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -11,7 +11,8 @@ app.secret_key = config.secret_key
 @app.route("/")
 def index():
     all_courses = courses.get_courses()
-    return render_template("index.html", courses=all_courses)
+    all_reviews = reviews.get_reviews()
+    return render_template("index.html", courses=all_courses, reviews=all_reviews)
 
 @app.route("/find_course")
 def find_course():
@@ -31,6 +32,18 @@ def show_course(course_id):
 @app.route("/new_course")
 def new_course():
     return render_template("new_course.html")
+
+@app.route("/create_course", methods=["POST"])
+def create_course():
+    name = request.form["name"]
+    code = request.form["code"]
+    credits = request.form["credits"]
+    grade = request.form["grade"]
+    user_id = session["user_id"]
+    
+    courses.add_course(name, code, grade, credits, user_id)
+    
+    return redirect("/")
 
 @app.route("/update_course", methods=["POST"])
 def update_course():
@@ -52,6 +65,7 @@ def edit_course(course_id):
 
 @app.route("/remove_course/<int:course_id>", methods=["GET", "POST"])
 def remove_course(course_id):
+
     if request.method == "GET":
         course = courses.get_course(course_id)
         return render_template("remove_course.html", course=course)
@@ -62,19 +76,6 @@ def remove_course(course_id):
             return redirect("/")
         else:
             return redirect("/course/" + str(course_id))
-    
-
-@app.route("/create_course", methods=["POST"])
-def create_course():
-    name = request.form["name"]
-    code = request.form["code"]
-    credits = request.form["credits"]
-    grade = request.form["grade"]
-    user_id = session["user_id"]
-    
-    courses.add_course(name, code, grade, credits, user_id)
-    
-    return redirect("/")
 
 @app.route("/register")
 def register():
@@ -124,7 +125,28 @@ def login():
             return render_template("login.html")
         
 @app.route("/my_courses")
+
+@app.route("/course/<int:course_id>/new_review")
+def new_review(course_id):
+    course = courses.get_course(course_id)
+    return render_template("new_review.html", course=course)
+
+@app.route("/course/<int:course_id>/create_review", methods=["POST"])
+def create_review(course_id):
+    difficulty = request.form["difficulty"]
+    workload = request.form["workload"]
+    grade = request.form["grade"]
+    feedback = request.form["feedback"]
+    user_id = session["user_id"]
     
+    if reviews.user_has_reviewed(course_id, user_id):
+        flash("Olet jo jättänyt palautteen tälle kurssille.", "error")
+        return redirect("/course/" + str(course_id))
+    
+    reviews.add_review(course_id, user_id, difficulty, workload, grade, feedback)
+    
+    flash("Arvostelu lisätty onnistuneesti!", "success")
+    return redirect("/")
 
 @app.route("/logout")
 def logout():

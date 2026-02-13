@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lisää arvostelu</title>
+</head>
+<body>
+    <h2>Arvostele kurssi: {{ course.name }}</h2>
+
+<form action="/course/{{ course.id }}/create_review" method="POST">
+    <p>Vaikeusaste (1-5):<br>
+    <input type="number" name="difficulty" min="1" max="5" required></p>
+    
+    <p>Työmäärä (tuntia/vko):<br>
+    <input type="number" name="workload" min="1" max="112" required></p>
+    
+    <p>Arvosana (0-5):<br>
+    <input type="number" name="grade" min="0" max="5" required></p>
+    
+    <p>Palaute:<br>
+    <textarea name="feedback" rows="5" cols="40" required></textarea></p>
+    
+    <button type="submit">Lähetä arvostelu</button>
+</form>
+</body>
+</html>

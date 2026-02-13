@@ -27,8 +27,6 @@ def update_course(course_id, name, code, grade, credits):
     sql = """UPDATE courses 
              SET name = ?, code = ?, grade = ?, credits = ? 
              WHERE id = ?"""
-    
-    # Suorita kysely tietokannassa
     db.execute(sql, [name, code, grade, credits, course_id])
     
 def remove_course(course_id):
