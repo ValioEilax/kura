@@ -21,7 +21,8 @@ def get_course(course_id):
             WHERE courses.user_id = users.id AND
                   courses.id = ?"""
     
-    return db.query(sql, [course_id])[0]
+    result = db.query(sql, [course_id])
+    return result[0] if result else None
 
 def update_course(course_id, name, code, grade, credits):
     sql = """UPDATE courses 
