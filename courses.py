@@ -5,7 +5,7 @@ def add_course(name, code, grade, credits, user_id):
     db.execute(sql, [name, code, grade, credits, user_id])
     
 def get_courses():
-    sql = "SELECT id, name FROM courses ORDER BY id DESC"
+    sql = "SELECT id, name, code FROM courses ORDER BY id DESC"
     
     return db.query(sql)
 

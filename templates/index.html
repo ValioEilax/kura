@@ -29,7 +29,7 @@
     {% if courses %}
       <ul>
         {% for course in courses %}
-          <li><a href="/course/{{ course.id }}">{{ course.name }}</a></li>
+          <li><a href="/course/{{ course.id }}">{{ course.code }} {{ course.name }}</a></li>
         {% endfor %}
       </ul>
     {% else %}
