@@ -48,6 +48,10 @@ def create_course():
 @app.route("/update_course", methods=["POST"])
 def update_course():
     course_id = request.form["course_id"]
+    course = courses.get_course(course_id)
+    if course["user_id"] != session["user_id"]:
+        abort(403)
+    
     name = request.form["name"]
     code = request.form["code"]
     credits = request.form["credits"]
@@ -61,13 +65,17 @@ def update_course():
 @app.route("/edit_course/<int:course_id>")
 def edit_course(course_id):
     course = courses.get_course(course_id)
+    if course["user_id"] != session["user_id"]:
+        abort(403)
     return render_template("edit_course.html", course=course)
 
 @app.route("/remove_course/<int:course_id>", methods=["GET", "POST"])
 def remove_course(course_id):
+    course = courses.get_course(course_id)
+    if course["user_id"] != session["user_id"]:
+        abort(403)
 
     if request.method == "GET":
-        course = courses.get_course(course_id)
         return render_template("remove_course.html", course=course)
     
     if request.method == "POST":
