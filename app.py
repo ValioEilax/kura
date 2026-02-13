@@ -8,6 +8,10 @@ import db, courses, reviews
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     all_courses = courses.get_courses()
@@ -37,6 +41,8 @@ def new_course():
 
 @app.route("/create_course", methods=["POST"])
 def create_course():
+    require_login()
+    
     name = request.form["name"]
     code = request.form["code"]
     credits = request.form["credits"]
@@ -49,6 +55,8 @@ def create_course():
 
 @app.route("/update_course", methods=["POST"])
 def update_course():
+    require_login()
+    
     course_id = request.form["course_id"]
     course = courses.get_course(course_id)
     if not course:
@@ -68,6 +76,8 @@ def update_course():
 
 @app.route("/edit_course/<int:course_id>")
 def edit_course(course_id):
+    require_login()
+    
     course = courses.get_course(course_id)
     if not course:
         abort(404)
@@ -77,6 +87,8 @@ def edit_course(course_id):
 
 @app.route("/remove_course/<int:course_id>", methods=["GET", "POST"])
 def remove_course(course_id):
+    require_login()
+    
     course = courses.get_course(course_id)
     if not course:
         abort(404)
@@ -149,6 +161,8 @@ def new_review(course_id):
 
 @app.route("/course/<int:course_id>/create_review", methods=["POST"])
 def create_review(course_id):
+    require_login()
+    
     difficulty = request.form["difficulty"]
     workload = request.form["workload"]
     grade = request.form["grade"]
