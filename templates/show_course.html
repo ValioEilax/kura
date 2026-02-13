@@ -22,7 +22,7 @@
       <p><strong>Koodi:</strong> {{ course.code }}</p>
       <p><strong>Arvosana:</strong> {{ course.grade }}</p>
       <p><strong>Opintopisteet:</strong> {{ course.credits }} op</p>
-      <p><strong>Lisännyt käyttäjä:</strong> {{ course.username }}</p>
+      <p><strong>Lisännyt käyttäjä:</strong> <a href="/user/{{ course.user_id }}">{{ course.username }}</a></p>
       <a href="/">Takaisin etusivulle</a>
     </p>
   </body>

@@ -3,7 +3,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 import config
-import db, courses, reviews
+import db, courses, reviews, users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -17,6 +17,14 @@ def index():
     all_courses = courses.get_courses()
     all_reviews = reviews.get_reviews()
     return render_template("index.html", courses=all_courses, reviews=all_reviews)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    courses = users.get_courses(user_id)
+    return render_template("show_user.html", user=user, courses=courses)
 
 @app.route("/find_course")
 def find_course():
