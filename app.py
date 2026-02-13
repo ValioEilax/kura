@@ -44,6 +44,8 @@ def create_course():
     require_login()
     
     name = request.form["name"]
+    if not name or len(name) > 50: 
+        abort(403)
     code = request.form["code"]
     credits = request.form["credits"]
     grade = request.form["grade"]
@@ -162,7 +164,7 @@ def new_review(course_id):
 @app.route("/course/<int:course_id>/create_review", methods=["POST"])
 def create_review(course_id):
     require_login()
-    
+
     difficulty = request.form["difficulty"]
     workload = request.form["workload"]
     grade = request.form["grade"]
