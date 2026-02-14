@@ -40,7 +40,7 @@
     {% if reviews %}
       <ul>
         {% for review in reviews %}
-          <li><a href="/review/{{ review.id }}">{{ review.course_name}} - {{ review.reviewer_name}} {{"★"* review.rating }}</a></li>
+          <li><a href="/course/{{ review.course_id }}/show_review">{{ review.course_name}} - {{ review.reviewer_name}} {{"★"* review.rating }}</a></li>
         {% endfor %}
       </ul>
     {% else %}

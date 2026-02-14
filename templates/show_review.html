@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ review.course_name }} - arvostelu</title>
+  </head>
+  <body>
+    <h1>Käyttäjän {{ review.reviewer_name }} arvostelu kurssista {{ review.course_name }}</h1>
+
+    {%- for message in get_flashed_messages() -%}
+      <p><b>{{ message }}</b></p>
+    {%- endfor -%}
+
+    {% if session.user_id == review.user_id %}
+    <p>
+      <a href="/edit_review/{{ review.id }}">Muokkaa arvostelua</a>
+      <a href="/remove_review/{{ review.id.id }}">Poista arvostelu</a>
+    </p>
+    {% endif %}
+
+      <p><strong>Vaikeustaso:</strong> {{ review.difficulty }}</p>
+      <p><strong>Käytetty aika viikossa:</strong> {{ review.workload }}</p>
+      <p><strong>Arvosana:</strong> {{ review.rating }}</p>
+      <p><strong>Palaute:</strong> {{ review.feedback }}</p>
+      <p>
+        <a href="/course/{{ review.course_id }}">Takaisin kurssisivulle</a>
+        <a href="/">Takaisin etusivulle</a>
+      </p>
+    </p>
+
+
+  </body>
+</html>

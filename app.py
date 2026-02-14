@@ -168,7 +168,7 @@ def create_review(course_id):
 
     difficulty = request.form["difficulty"]
     workload = request.form["workload"]
-    grade = request.form["grade"]
+    rating = request.form["rating"]
     feedback = request.form["feedback"]
     user_id = session["user_id"]
     
@@ -176,10 +176,18 @@ def create_review(course_id):
         flash("Olet jo jättänyt palautteen tälle kurssille.", "error")
         return redirect("/course/" + str(course_id))
     
-    reviews.add_review(course_id, user_id, difficulty, workload, grade, feedback)
+    reviews.add_review(course_id, user_id, difficulty, workload, rating, feedback)
     
     flash("Arvostelu lisätty onnistuneesti!", "success")
     return redirect("/")
+
+
+@app.route("/course/<int:course_id>/show_review")
+def show_review(course_id):
+    review = reviews.get_review(course_id)
+    if not review:
+        abort(404)
+    return render_template("show_review.html", review=review)
 
 @app.route("/logout")
 def logout():
