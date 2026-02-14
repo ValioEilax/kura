@@ -7,7 +7,7 @@
     <h1>Arvostelun poisto</h1>
     <p>Kurssi: {{ review.course_name }}</p>
     <p>Haluatko varmasti poistaa tämän kurssin arvostelun?</p>
-    <form action="/review/{{ review.id }}/remove" method="post">
+    <form action="/remove_review/{{ review.id }}" method="post">
       <input type="submit" name="remove" value="Poista arvostelu" />
       <input type="submit" name="back" value="Palaa takaisin" />
     </form>
