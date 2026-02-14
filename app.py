@@ -208,6 +208,41 @@ def remove_review(review_id):
 
     return redirect(f"/course/{review['course_id']}")
 
+
+@app.route("/edit_review/<int:review_id>")
+def edit_review(review_id):
+    require_login()
+    
+    review = reviews.get_review_by_id(review_id)
+    if not review:
+        abort(404)
+    if review["user_id"] != session["user_id"]:
+        abort(403)
+    return render_template("edit_review.html", review=review)
+
+@app.route("/update_review", methods=["POST"])
+def update_review():
+    require_login()
+    
+    review_id = request.form["review_id"]
+    print(review_id)
+    review = reviews.get_review_by_id(review_id)
+    if not review:
+        abort(404)
+    if review["user_id"] != session["user_id"]:
+        abort(403)
+        
+    difficulty = request.form["difficulty"]
+    workload = request.form["workload"]
+    rating = request.form["rating"]
+    feedback = request.form["feedback"]
+    
+    reviews.update_review(review_id, difficulty, workload, rating, feedback)
+    
+    flash("Kurssin arvostelua muokattu onnistuneesti!", "sucess")
+    return redirect("/course/" + str(review["course_id"]) + "/show_review")
+
+
 @app.route("/logout")
 def logout():
     session.clear()

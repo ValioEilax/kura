@@ -57,3 +57,13 @@ def get_review_by_id(review_id):
 def remove_review(review_id):
     sql = "DELETE FROM reviews WHERE id = ?"
     db.execute(sql, [review_id])   
+    
+    
+def update_review(review_id, difficulty, workload, rating, feedback):
+    sql = """
+      UPDATE reviews
+      SET difficulty = ?, workload = ?, rating = ?, feedback = ?
+      WHERE id = ?
+    """
+    
+    db.execute(sql, [difficulty, workload, rating, feedback, review_id])

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Muokkaa arvostelua</title>
+  </head>
+  <body>
+    <form action="/update_review" method="post">
+      <p>
+        Vaikeusaste: <br />
+        <input type="number" name="difficulty" min="1" max="5" required value="{{ review.difficulty }}" />
+      </p>
+      <p>
+        Työmäärä (tuntia/vko): <br />
+        <input type="number" name="workload" min="1" max="112" required value="{{ review.workload }}" />
+      </p>
+      <p>
+        Annettu arvosana: <br />
+        <input type="number" name="rating" size="8" min="0" max="5" required value="{{ review.rating }}" />
+      </p>
+      <p>
+        Palaute:<br>
+        <textarea name="feedback" rows="5" cols="40" maxlength="1000" required>{{ review.feedback }}</textarea>
+     </p>
+      <input type="hidden" name="review_id" value="{{ review.id }}" />
+      <input type="submit" value="Päivitä arvostelua" />
+    </form>
+  </body>
+</html>
