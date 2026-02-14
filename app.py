@@ -189,7 +189,7 @@ def show_review(course_id):
         abort(404)
     return render_template("show_review.html", review=review)
 
-@app.route("/review/<int:review_id>/remove", methods=["GET", "POST"])
+@app.route("/remove_review/<int:review_id>", methods=["GET", "POST"])
 def remove_review(review_id):
     require_login()
     review = reviews.get_review_by_id(review_id)
