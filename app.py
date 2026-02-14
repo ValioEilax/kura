@@ -189,6 +189,25 @@ def show_review(course_id):
         abort(404)
     return render_template("show_review.html", review=review)
 
+@app.route("/review/<int:review_id>/remove", methods=["GET", "POST"])
+def remove_review(review_id):
+    require_login()
+    review = reviews.get_review_by_id(review_id)
+    if not review:
+        abort(404)
+    if review["user_id"] != session["user_id"]:
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("remove_review.html", review=review)
+
+
+    if "remove" in request.form:
+        reviews.remove_review(review_id)
+        flash("Kurssin arvostelu poistettu onnistuneesti!", "success")
+
+    return redirect(f"/course/{review['course_id']}")
+
 @app.route("/logout")
 def logout():
     session.clear()

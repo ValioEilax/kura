@@ -40,3 +40,20 @@ def get_review(course_id):
     
     result = db.query(sql, [course_id])
     return result[0] if result else None
+
+
+def get_review_by_id(review_id):
+    sql = """
+        SELECT r.id, r.course_id, r.user_id,
+             r.difficulty, r.workload, r.rating, r.feedback, r.created_at,
+             c.name AS course_name
+        FROM reviews r
+        JOIN courses c ON c.id = r.course_id
+        WHERE r.id = ?"""
+        
+    result = db.query(sql, [review_id])
+    return result[0] if result else None
+
+def remove_review(review_id):
+    sql = "DELETE FROM reviews WHERE id = ?"
+    db.execute(sql, [review_id])   
