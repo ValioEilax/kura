@@ -3,13 +3,13 @@ import db
 def add_course(name, code, grade, credits, user_id, classes):
     sql = "INSERT INTO courses (name, code, grade, credits, user_id) VALUES (?, ?, ?, ?, ?)"
     db.execute(sql, [name, code, grade, credits, user_id])
-    
+
     course_id = db.last_insert_id()
-    
+
     sql = "INSERT INTO course_classes (course_id, title, value) VALUES (?, ?, ?)"
     for title, value in classes:
         db.execute(sql, [course_id, title, value])
-    
+
 def get_courses():
     sql = """
         SELECT courses.id, courses.name, courses.code, courses.credits, users.username, user_id 
@@ -30,7 +30,7 @@ def get_course(course_id):
             FROM courses, users
             WHERE courses.user_id = users.id AND
                   courses.id = ?"""
-    
+
     result = db.query(sql, [course_id])
     return result[0] if result else None
 
@@ -41,35 +41,32 @@ def get_classes(course_id):
 def get_all_classes():
     sql = "SELECT title, value FROM classes ORDER BY id"
     result = db.query(sql)
-    
+
     classes = {}
     for title, value in result:
         classes[title] = []
     for title, value in result:
         classes[title].append(value)
-        
+
     return classes
     
-    
-
 def update_course(course_id, name, code, grade, credits, classes):
     sql = """UPDATE courses 
              SET name = ?, code = ?, grade = ?, credits = ? 
              WHERE id = ?"""
     db.execute(sql, [name, code, grade, credits, course_id])
-    
+
     sql = "DELETE FROM course_classes WHERE course_id = ?"
     db.execute(sql, [course_id])
-    
     
     sql = "INSERT INTO course_classes (course_id, title, value) VALUES (?, ?, ?)"
     for title, value in classes:
         db.execute(sql, [course_id, title, value])
-    
+
 def remove_course(course_id):
     sql = "DELETE FROM courses WHERE id = ?"
     db.execute(sql, [course_id])   
-    
+
 def find_courses(query):
     sql = """SELECT id, name, code
              FROM courses
@@ -77,4 +74,3 @@ def find_courses(query):
              ORDER BY id DESC"""
     pattern = "%" + query + "%"
     return db.query(sql, [pattern, pattern])
-    

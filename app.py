@@ -46,14 +46,14 @@ def show_course(course_id):
 @app.route("/new_course")
 def new_course():
     require_login()
-    
+
     classes = courses.get_all_classes()
     return render_template("new_course.html", classes=classes)
 
 @app.route("/create_course", methods=["POST"])
 def create_course():
     require_login()
-    
+
     name = request.form["name"]
     if not name or len(name) > 50: 
         abort(403)
@@ -61,9 +61,9 @@ def create_course():
     credits = request.form["credits"]
     grade = request.form["grade"]
     user_id = session["user_id"]
-    
+
     all_classes = courses.get_all_classes()
-    
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
@@ -75,29 +75,29 @@ def create_course():
             classes.append((title, value))
 
     courses.add_course(name, code, grade, credits, user_id, classes)
-    
+
     return redirect("/")
-    
+
 
 @app.route("/update_course", methods=["POST"])
 def update_course():
     require_login()
-    
+
     course_id = request.form["course_id"]
     course = courses.get_course(course_id)
     if not course:
         abort(404)
     if course["user_id"] != session["user_id"]:
         abort(403)
-        
+
     name = request.form["name"]
     code = request.form["code"]
     credits = request.form["credits"]
     grade = request.form["grade"]
     user_id = session["user_id"]
-    
+
     all_classes = courses.get_all_classes()
-    
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
@@ -108,34 +108,33 @@ def update_course():
                 abort(403)
             classes.append((title, value))
 
-    
     courses.update_course(course_id, name, code, grade, credits, classes)
-    
+
     return redirect("/course/" + str(course_id))
 
 @app.route("/edit_course/<int:course_id>")
 def edit_course(course_id):
     require_login()
-    
+
     course = courses.get_course(course_id)
     if not course:
         abort(404)
     if course["user_id"] != session["user_id"]:
         abort(403)
-        
+
     all_classes = courses.get_all_classes()
     classes = {}
     for my_class in all_classes:
         classes[my_class] = ""
     for entry in courses.get_classes(course_id):
         classes[entry["title"]] = entry["value"]
-        
+
     return render_template("edit_course.html", course=course, classes=classes, all_classes=all_classes)
 
 @app.route("/remove_course/<int:course_id>", methods=["GET", "POST"])
 def remove_course(course_id):
     require_login()
-    
+
     course = courses.get_course(course_id)
     if not course:
         abort(404)
@@ -144,7 +143,7 @@ def remove_course(course_id):
 
     if request.method == "GET":
         return render_template("remove_course.html", course=course)
-    
+
     if request.method == "POST":
         if "remove" in request.form:
             courses.remove_course(course_id)
@@ -164,13 +163,13 @@ def create():
     if password1 != password2:
         flash("VIRHE: salasanat eivät täsmää")
         return render_template("register.html")
-    
+
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
         flash("VIRHE: Valitsemasi tunnus on jo varattu")
         return render_template("register.html")       
-    
+
     flash("Tunnus luotu onnistuneesti! Voit nyt kirjautua sisään.")
     return redirect("/login")
 
@@ -178,12 +177,11 @@ def create():
 def login():
     if request.method == "GET":
         return render_template("login.html")
-    
-    
+
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        
+
         user_id = users.check_login(username, password)
         if user_id:
             session["user_id"] = user_id
@@ -192,7 +190,7 @@ def login():
         else:            
             flash("VIRHE: väärä tunnus tai salasana")
             return render_template("login.html")
-        
+ 
 @app.route("/my_courses")
 
 @app.route("/course/<int:course_id>/new_review")
@@ -203,19 +201,19 @@ def new_review(course_id):
 @app.route("/course/<int:course_id>/create_review", methods=["POST"])
 def create_review(course_id):
     require_login()
-
+    
     difficulty = request.form["difficulty"]
     workload = request.form["workload"]
     rating = request.form["rating"]
     feedback = request.form["feedback"]
     user_id = session["user_id"]
-    
+
     if reviews.user_has_reviewed(course_id, user_id):
         flash("Olet jo jättänyt palautteen tälle kurssille.", "error")
         return redirect("/course/" + str(course_id))
-    
+
     reviews.add_review(course_id, user_id, difficulty, workload, rating, feedback)
-    
+
     flash("Arvostelu lisätty onnistuneesti!", "success")
     return redirect("/")
 
@@ -225,9 +223,9 @@ def show_review(course_id):
     review = reviews.get_review(course_id)
     if not review:
         abort(404)
-        
+
     comments = reviews.get_comments(review["id"])
-    
+
     return render_template("show_review.html", review=review, comments=comments)
 
 @app.route("/remove_review/<int:review_id>", methods=["GET", "POST"])
@@ -253,7 +251,7 @@ def remove_review(review_id):
 @app.route("/edit_review/<int:review_id>")
 def edit_review(review_id):
     require_login()
-    
+
     review = reviews.get_review_by_id(review_id)
     if not review:
         abort(404)
@@ -264,7 +262,7 @@ def edit_review(review_id):
 @app.route("/update_review", methods=["POST"])
 def update_review():
     require_login()
-    
+
     review_id = request.form["review_id"]
     print(review_id)
     review = reviews.get_review_by_id(review_id)
@@ -272,14 +270,14 @@ def update_review():
         abort(404)
     if review["user_id"] != session["user_id"]:
         abort(403)
-        
+
     difficulty = request.form["difficulty"]
     workload = request.form["workload"]
     rating = request.form["rating"]
     feedback = request.form["feedback"]
-    
+
     reviews.update_review(review_id, difficulty, workload, rating, feedback)
-    
+
     flash("Kurssin arvostelua muokattu onnistuneesti!", "sucess")
     return redirect("/course/" + str(review["course_id"]) + "/show_review")
 
@@ -287,9 +285,9 @@ def update_review():
 def add_comment(review_id):
     require_login()
     review = reviews.get_review_by_id(review_id)
-    
+
     content = request.form["content"].strip()
-    
+
     if not content:
         flash("Kommentti ei voi olla tyhjä")
     elif len(content) > 500:
@@ -297,7 +295,7 @@ def add_comment(review_id):
     else:
         reviews.add_comment(review_id, session["user_id"], content)
         flash("Kommentti lisätty!")
-        
+
     return redirect("/course/" + str(review["course_id"]) + "/show_review")
 
 @app.route("/comment/<int:comment_id>/delete", methods=["POST"])

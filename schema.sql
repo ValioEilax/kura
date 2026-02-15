@@ -38,7 +38,6 @@ CREATE TABLE course_classes (
     value TEXT
 );
 
-
 CREATE TABLE comments (
     id INTEGER PRIMARY KEY,
     review_id INTEGER REFERENCES reviews ON DELETE CASCADE,
