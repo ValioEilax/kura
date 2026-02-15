@@ -1,12 +1,17 @@
 import db
 
-def add_course(name, code, grade, credits, user_id):
+def add_course(name, code, grade, credits, user_id, classes):
     sql = "INSERT INTO courses (name, code, grade, credits, user_id) VALUES (?, ?, ?, ?, ?)"
     db.execute(sql, [name, code, grade, credits, user_id])
     
+    course_id = db.last_insert_id()
+    
+    sql = "INSERT INTO course_classes (course_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [course_id, title, value])
+    
 def get_courses():
     sql = "SELECT id, name, code FROM courses ORDER BY id DESC"
-    
     return db.query(sql)
 
 def get_course(course_id):
@@ -23,6 +28,10 @@ def get_course(course_id):
     
     result = db.query(sql, [course_id])
     return result[0] if result else None
+
+def get_classes(course_id):
+    sql = "SELECT title, value FROM course_classes WHERE course_id = ?"
+    return db.query(sql, [course_id])
 
 def update_course(course_id, name, code, grade, credits):
     sql = """UPDATE courses 

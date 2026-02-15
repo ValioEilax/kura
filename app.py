@@ -40,7 +40,8 @@ def show_course(course_id):
     course = courses.get_course(course_id)
     if not course:
         abort(404)
-    return render_template("show_course.html", course=course)
+    classes = courses.get_classes(course_id)
+    return render_template("show_course.html", course=course, classes=classes)
 
 @app.route("/new_course")
 def new_course():
@@ -58,7 +59,15 @@ def create_course():
     grade = request.form["grade"]
     user_id = session["user_id"]
     
-    courses.add_course(name, code, grade, credits, user_id)
+    classes = []
+    method = request.form["method"]
+    if method:
+        classes.append(("Suoritustapa", method))
+    module = request.form["module"]
+    if module:
+        classes.append(("Opintokokonaisuus", module))
+    
+    courses.add_course(name, code, grade, credits, user_id, classes)
     
     return redirect("/")
 

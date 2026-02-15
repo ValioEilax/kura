@@ -23,3 +23,10 @@ CREATE TABLE reviews (
     feedback TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE course_classes (
+    id INTEGER PRIMARY KEY,
+    course_id INTEGER REFERENCES courses,
+    title TEXT,
+    value TEXT
+)

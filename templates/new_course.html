@@ -22,6 +22,32 @@
         Opintopisteet: <br />
         <input type="number" name="credits" size="8" min="0" required/> op
       </p>
+      
+      <p>
+        Suoritustapa: <br />
+        <select name="method">
+          <option value="">(Valitse suoritustapa)</option>
+          <option value="Lähiopetus">Lähiopetus</option>
+          <option value="Etäopetus">Etäopetus</option>
+          <option value="Monimuoto-opetus">Monimuoto-opetus</option>
+          <option value="Verkkokurssi">Verkkokurssi</option>
+          <option value="MOOC">MOOC</option>
+          <option value="Kirjatentti">Kirjatentti</option>
+          <option value="Työharjoittelu">Työharjoittelu</option>
+        </select>
+      </p>
+
+      <p>Opintokokonaisuus:<br>
+      <select name="module">
+          <option value="">(Valitse opintokokonaisuus)</option>
+          <option value="TKT Perusopinnot">TKT Perusopinnot</option>
+          <option value="TKT Aineopinnot">TKT Aineopinnot</option>
+          <option value="Matematiikka ja tilastotiede">Matematiikka ja tilastotiede</option>
+          <option value="Valinnainen sivuaine">Valinnainen sivuaine</option>
+          <option value="Kieli- ja viestintäopinnot">Kieli- ja viestintäopinnot</option>
+          <option value="Muut opinnot">Muut opinnot</option>
+      </select></p>
+
       <input type="submit" value="Luo uusi kurssi" />
     </form>
     <p>
