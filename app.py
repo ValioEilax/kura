@@ -300,6 +300,24 @@ def add_comment(review_id):
         
     return redirect("/course/" + str(review["course_id"]) + "/show_review")
 
+@app.route("/comment/<int:comment_id>/delete", methods=["POST"])
+def delete_comment(comment_id):
+    require_login()
+
+    comment = reviews.get_comment_by_id(comment_id)
+
+    if not comment:
+        abort(404)
+
+    if comment["user_id"] != session["user_id"]:
+        abort(403)
+
+    review = reviews.get_review_by_id(comment["review_id"])
+
+    reviews.remove_comment(comment_id, session["user_id"])
+    flash("Kommentti poistettu.")
+        
+    return redirect("/course/" + str(review["course_id"]) + "/show_review")
 
 @app.route("/logout")
 def logout():

@@ -35,6 +35,16 @@
         <strong>{{ comment.username }}</strong> 
         <small style="color: gray;">({{ comment.created_at }})</small>
         <p>{{ comment.content }}</p>
+
+        {% if session.user_id == comment.user_id %}
+          <form action="/comment/{{ comment.id }}/delete" method="POST" style="display: inline;">
+            <button type="submit" 
+                    style="background: none; border: none; color: red; cursor: pointer; text-decoration: underline; padding: 0;"
+                    onclick="return confirm('Haluatko varmasti poistaa kommentin?')">
+              Poista
+            </button>
+          </form>
+        {% endif %}
       </div>
     {% else %}
       <p>Ei vielä kommentteja. Ole ensimmäinen!</p>
