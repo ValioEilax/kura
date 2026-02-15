@@ -33,7 +33,7 @@ CREATE TABLE classes (
 
 CREATE TABLE course_classes (
     id INTEGER PRIMARY KEY,
-    course_id INTEGER REFERENCES courses,
+    course_id INTEGER REFERENCES courses ON DELETE CASCADE,
     title TEXT,
     value TEXT
 );
