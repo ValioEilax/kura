@@ -24,9 +24,16 @@ CREATE TABLE reviews (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+CREATE TABLE classes (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    value TEXT
+);
+
 CREATE TABLE course_classes (
     id INTEGER PRIMARY KEY,
     course_id INTEGER REFERENCES courses,
     title TEXT,
     value TEXT
-)
+);

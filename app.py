@@ -45,7 +45,10 @@ def show_course(course_id):
 
 @app.route("/new_course")
 def new_course():
-    return render_template("new_course.html")
+    require_login()
+    
+    classes = courses.get_all_classes()
+    return render_template("new_course.html", classes=classes)
 
 @app.route("/create_course", methods=["POST"])
 def create_course():
@@ -60,16 +63,15 @@ def create_course():
     user_id = session["user_id"]
     
     classes = []
-    method = request.form["method"]
-    if method:
-        classes.append(("Suoritustapa", method))
-    module = request.form["module"]
-    if module:
-        classes.append(("Opintokokonaisuus", module))
-    
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
+
     courses.add_course(name, code, grade, credits, user_id, classes)
     
     return redirect("/")
+    
 
 @app.route("/update_course", methods=["POST"])
 def update_course():
