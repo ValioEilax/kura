@@ -68,7 +68,7 @@ def remove_course(course_id):
     db.execute(sql, [course_id])   
 
 def find_courses(query):
-    sql = """SELECT c.id, c.name, c.code, c.user_id, u.username
+    sql = """SELECT c.id, c.name, c.code, c.user_id, c.credits, u.username
              FROM courses c
              JOIN users u ON c.user_id = u.id
              WHERE c.name LIKE ? OR c.code LIKE ? OR u.username LIKE ?
