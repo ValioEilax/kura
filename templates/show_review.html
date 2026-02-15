@@ -21,10 +21,6 @@
       <p><strong>Käytetty aika viikossa:</strong> {{ review.workload }}</p>
       <p><strong>Arvosana:</strong> {{ review.rating }}</p>
       <p><strong>Palaute:</strong> {{ review.feedback }}</p>
-      <p>
-        <a href="/course/{{ review.course_id }}">Takaisin kurssisivulle</a>
-        <a href="/">Takaisin etusivulle</a>
-      </p>
     </p>
 
     <hr>
@@ -59,6 +55,11 @@
       </p>
       <button type="submit">Lähetä kommentti</button>
     </form>
+
+    <p>
+      <a href="/course/{{ review.course_id }}">Takaisin kurssisivulle</a>
+      <a href="/">Takaisin etusivulle</a>
+    </p>
 
   </body>
 </html>
