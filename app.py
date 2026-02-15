@@ -90,7 +90,14 @@ def update_course():
     grade = request.form["grade"]
     user_id = session["user_id"]
     
-    courses.update_course(course_id, name, code, grade, credits)
+    classes = []
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
+
+    
+    courses.update_course(course_id, name, code, grade, credits, classes)
     
     return redirect("/course/" + str(course_id))
 
@@ -103,7 +110,15 @@ def edit_course(course_id):
         abort(404)
     if course["user_id"] != session["user_id"]:
         abort(403)
-    return render_template("edit_course.html", course=course)
+        
+    all_classes = courses.get_all_classes()
+    classes = {}
+    for my_class in all_classes:
+        classes[my_class] = ""
+    for entry in courses.get_classes(course_id):
+        classes[entry["title"]] = entry["value"]
+        
+    return render_template("edit_course.html", course=course, classes=classes, all_classes=all_classes)
 
 @app.route("/remove_course/<int:course_id>", methods=["GET", "POST"])
 def remove_course(course_id):

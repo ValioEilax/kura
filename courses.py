@@ -47,11 +47,19 @@ def get_all_classes():
     
     
 
-def update_course(course_id, name, code, grade, credits):
+def update_course(course_id, name, code, grade, credits, classes):
     sql = """UPDATE courses 
              SET name = ?, code = ?, grade = ?, credits = ? 
              WHERE id = ?"""
     db.execute(sql, [name, code, grade, credits, course_id])
+    
+    sql = "DELETE FROM course_classes WHERE course_id = ?"
+    db.execute(sql, [course_id])
+    
+    
+    sql = "INSERT INTO course_classes (course_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [course_id, title, value])
     
 def remove_course(course_id):
     sql = "DELETE FROM courses WHERE id = ?"

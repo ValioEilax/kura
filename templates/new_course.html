@@ -26,12 +26,12 @@
       {% for class in classes %}
       <p>
         {{ class }}: <br />
-          <select name="classes">
-            <option value="">(Valitse suoritustapa)</option>
-          {% for option in classes[class] %}
-                <option value="{{ class }}:{{ option }}">{{ option }}</option>
-          {% endfor %}
-          </select>
+        <select name="classes">
+          <option value="">(Valitse suoritustapa)</option>
+        {% for option in classes[class] %}
+          <option value="{{ class }}:{{ option }}">{{ option }}</option>
+        {% endfor %}
+        </select>
       </p>
       {% endfor %}
 

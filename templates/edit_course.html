@@ -29,6 +29,24 @@
         />
         op
       </p>
+
+      {% for class in all_classes %}
+      <p>
+        {{ class }}: <br />
+        <select name="classes">
+          <option value="">(Valitse suoritustapa)</option>
+        {% for option in all_classes[class] %}
+          {% if classes[class] == option %}
+          <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
+          {% else %}
+          <option value="{{ class }}:{{ option }}">{{ option }}</option>
+          {% endif %}
+        {% endfor %}
+        </select>
+      </p>
+      {% endfor %}
+
+      
       <input type="hidden" name="course_id" value="{{ course.id }}" />
       <input type="submit" value="Päivitä kurssia" />
     </form>
