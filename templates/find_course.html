@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Etsi kurssi</title>
+    <title>Etsi suorituksia</title>
   </head>
   <body>
-    <h1>Etsi kurssi</h1>
+    <h1>Etsi suorituksia</h1>
 
     <form action="/find_course" method="get">
       <p>Hakusana: <input type="text" name="query" value="{{ query }}" /></p>
       <input type="submit" value="Lähetä" />
     </form>
+
     {% if query %}
     <h2>Tulokset</h2>
 
     <ul>
       {% for course in results %}
       <li>
+        <a href="/user/{{ course.user_id }}"><strong>{{ course.username }}</strong></a>
+        suoritti kurssin:
         <a href="/course/{{ course.id }}">
-          <strong>{{ course.code }}</strong> {{ course.name }}
+          {{ course.code }} {{ course.name }} ({{ course.credits }} op)
         </a>
       </li>
       {% else %}
