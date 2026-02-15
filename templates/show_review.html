@@ -27,6 +27,28 @@
       </p>
     </p>
 
+    <hr>
+    <h3>Kommentit</h3>
+
+    {% for comment in comments %}
+      <div style="border-bottom: 1px solid #eee; margin-bottom: 10px; padding-bottom: 5px;">
+        <strong>{{ comment.username }}</strong> 
+        <small style="color: gray;">({{ comment.created_at }})</small>
+        <p>{{ comment.content }}</p>
+      </div>
+    {% else %}
+      <p>Ei vielä kommentteja. Ole ensimmäinen!</p>
+    {% endfor %}
+
+    <hr>
+
+    <h4>Lisää kommentti</h4>
+    <form action="/review/{{ review.id }}/comment" method="post">
+      <p>
+        <textarea name="content" rows="3" cols="40" required placeholder="Kirjoita tähän..."></textarea>
+      </p>
+      <button type="submit">Lähetä kommentti</button>
+    </form>
 
   </body>
 </html>

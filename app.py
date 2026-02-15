@@ -225,7 +225,10 @@ def show_review(course_id):
     review = reviews.get_review(course_id)
     if not review:
         abort(404)
-    return render_template("show_review.html", review=review)
+        
+    comments = reviews.get_comments(review["id"])
+    
+    return render_template("show_review.html", review=review, comments=comments)
 
 @app.route("/remove_review/<int:review_id>", methods=["GET", "POST"])
 def remove_review(review_id):
@@ -278,6 +281,23 @@ def update_review():
     reviews.update_review(review_id, difficulty, workload, rating, feedback)
     
     flash("Kurssin arvostelua muokattu onnistuneesti!", "sucess")
+    return redirect("/course/" + str(review["course_id"]) + "/show_review")
+
+@app.route("/review/<int:review_id>/comment", methods=["POST"])
+def add_comment(review_id):
+    require_login()
+    review = reviews.get_review_by_id(review_id)
+    
+    content = request.form["content"].strip()
+    
+    if not content:
+        flash("Kommentti ei voi olla tyhjä")
+    elif len(content) > 500:
+        flash("Kommentti on liian pitkä (max 500 merkkiä)")
+    else:
+        reviews.add_comment(review_id, session["user_id"], content)
+        flash("Kommentti lisätty!")
+        
     return redirect("/course/" + str(review["course_id"]) + "/show_review")
 
 

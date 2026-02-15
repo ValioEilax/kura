@@ -37,3 +37,12 @@ CREATE TABLE course_classes (
     title TEXT,
     value TEXT
 );
+
+
+CREATE TABLE comments (
+    id INTEGER PRIMARY KEY,
+    review_id INTEGER REFERENCES reviews ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users ON DELETE CASCADE,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)

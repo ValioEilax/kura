@@ -67,3 +67,16 @@ def update_review(review_id, difficulty, workload, rating, feedback):
     """
     
     db.execute(sql, [difficulty, workload, rating, feedback, review_id])
+    
+def add_comment(review_id, user_id, content):
+    sql = "INSERT INTO comments (review_id, user_id, content) VALUES (?, ?, ?)"
+    db.execute(sql, [review_id, user_id, content])
+    
+def get_comments(review_id):
+    sql = """SELECT c.content, c.created_at, u.username
+             FROM comments c
+             JOIN users u ON c.user_id = u.id
+             WHERE c.review_id = ?
+             ORDER BY c.created_at DESC"""
+             
+    return db.query(sql, [review_id])
