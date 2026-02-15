@@ -10,7 +10,7 @@ def get_user(user_id):
     
     
 def get_courses(user_id):
-    sql = "SELECT id, name, code FROM courses WHERE user_id = ?"
+    sql = "SELECT id, name, code, credits FROM courses WHERE user_id = ?"
     return db.query(sql, [user_id])
 
 def create_user(username, password1):

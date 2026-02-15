@@ -25,22 +25,32 @@
     {% endif %}
 
 
-    <h2>Lisätyt kurssit</h2>
+    <h2>Yhteisön suorittamia kursseja</h2>
     {% if courses %}
       <ul>
         {% for course in courses %}
-          <li><a href="/course/{{ course.id }}">{{ course.code }} {{ course.name }}</a></li>
+        <li>
+          <a href="/user/{{ course.user_id }}">{{ course.username }}</a>
+        suoritti kurssin:
+          <a href="/course/{{ course.id }}">{{ course.code }} {{ course.name }} ({{ course.credits }}op)</a>
+        </li>
         {% endfor %}
       </ul>
     {% else %}
       <p>Ei lisättyjä kursseja</p>
     {% endif %}
 
-        <h2>Kaikki arvostelut</h2>
+        <h2>Yhteisön lisäämiä arvosteluja kursseista</h2>
     {% if reviews %}
       <ul>
         {% for review in reviews %}
-          <li><a href="/course/{{ review.course_id }}/show_review">{{ review.course_name}} - {{ review.reviewer_name}} {{"★"* review.rating }}</a></li>
+        <li>
+        <a href="/user/{{ review.user_id }}">{{ review.reviewer_name }}</a>
+        antoi kurssille
+        <a href="/course/{{ review.course_id }}/show_review">
+          {{ review.course_name }}
+          {{ "★" * (review.rating) }}{{ "☆" * (5 - (review.rating)) }}
+      </li>
         {% endfor %}
       </ul>
     {% else %}
@@ -48,3 +58,4 @@
     {% endif %}
   </body>
 </html>
+
