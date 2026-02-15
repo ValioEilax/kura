@@ -4,10 +4,18 @@
 
 ## Keskeiset toiminnot
 * **Käyttäjähallinta:** Rekisteröityminen ja sisäänkirjautuminen. Salasanat tallennetaan tietokantaan turvallisesti `werkzeug.security`-hashauksella.
-* **Kurssien hallinta (CRUD):** * Käyttäjä voi lisätä uusia kursseja (nimi, koodi, opintopisteet, arvosana).
+* **Kurssien hallinta (CRUD):**
+    * Käyttäjä voi lisätä uusia kursseja (nimi, koodi, opintopisteet, arvosana).
     * Käyttäjä voi muokata omia lisäyksiään.
     * Käyttäjä voi poistaa omia lisäyksiään erillisen vahvistussivun kautta.
-* **Haku ja suodatus:** Kursseja voi etsiä hakusanalla kurssin nimen tai koodin (esim. "TKT10002") perusteella.
+* **Datan validointi (Luokat):** Kursseille voidaan lisätä luokkia (esim. suoritustapa), joiden oikeellisuus tarkistetaan palvelimella "whitelist"-tekniikalla. Tämä varmistaa, että lomakkeelta tuleva tieto täsmää tietokannan sallittujen kategorioiden kanssa, mikä estää virheellisen datan tallentamisen.
+* **Haku ja suodatus:** Kursseja voi etsiä hakusanalla kurssin nimen, koodin tai käyttäjätunnuksen (esim. "TKT10002" tai "pelaaja2") perusteella.
+*  **Arvostelut (toissijaiset tietokohteet):**
+      * Käyttäjä voi jättää suorittamistaan kursseista arvosteluja, jotka sisältävät numeerisia arvioita (vaikeus, työmäärän    vastaavuus, yleisarvosana) ja sanallista palautetta.
+      * Kaikki CRUD ominaisuudet pätevät myös kurssien arvosteluihin.
+* **Sosiaalinen syöte:** Käyttäjä voi nähdä myös muiden käyttäjien suorittamia kursseja sekä heidän arvosteluja omalla etusivullaan.
+* **Keskustelu ja kommentointi:** Arvosteluihin on mahdollista lisätä kommentteja (toisen tason toissijainen kohde).
+* **Käyttäjäpalaute (Flash-viestit):** Sovellus käyttää Flash-viestejä antaakseen välittömän kuittauksen suoritetuista toiminnoista, kuten onnistuneesta kommentin lisäyksestä tai varoituksen virheellisestä syötteestä.
 * **Tietoturva:** Sovellus tarkistaa käyttöoikeudet (omistajuuden) aina ennen muokkaus- tai poisto-operaatioita.
 
 ## Käyttöönotto-ohjeet
@@ -39,6 +47,9 @@ pip install -r requirements.txt
 ```
 sqlite3 database.db < schema.sql
 ```
+```
+sqlite3 database.db < init.sql
+```
 
 ### 5. Sovelluksen käynnistys
 ```
@@ -50,10 +61,8 @@ Sovellus on nyt käytettävissä osoitteessa: http://127.0.0.1:5000
 ## Tulossa olevat toiminnot
 
 ### Lisäominaisuudet (Arvosanat 4 ja 5)
-* **Arvostelut (toissijaiset tietokohteet):** Käyttäjät voivat jättää kursseista arvosteluja, jotka sisältävät numeerisia arvioita (yleisarvosana, vaikeus, työmäärän vastaavuus) ja sanallista palautetta.
-* **Sosiaalinen syöte (Feed):** Käyttäjä voi seurata muita käyttäjiä ja nähdä heidän tuoreimmat arvostelunsa omalla etusivullaan.
-* **Keskustelu ja kommentointi:** Arvosteluihin on mahdollista lisätä kommentteja (toisen tason toissijainen kohde).
-* **Aggregoidut tilastot:** Kurssisivulla näytetään SQL:llä laskettuja keskiarvoja kaikkien opiskelijoiden antamista arvioista.
+* **Aggregoidut tilastot:** Kurssisivulla sivulla näytetään SQL:llä laskettu kaikkien suoritettujen kurssien arvosanojen keskiarvo sekä opintopisteiden summa.
+* **Aggregoidut tilastot:** Tilastot sivulla näytetään SQL:llä laskettuja keskiarvoja kaikkien opiskelijoiden antamista arvioista.
 * **Sivutus (Pagination):** Kurssilistaukset ja syötteet on toteutettu sivutettuna suuren tietomäärän hallitsemiseksi.
 * **Profiilikuvat:** Käyttäjät voivat ladata profiilikuvan (toteutettu `alt`-attribuutteja käyttäen saavutettavuuden varmistamiseksi).
 
