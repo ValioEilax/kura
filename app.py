@@ -62,11 +62,17 @@ def create_course():
     grade = request.form["grade"]
     user_id = session["user_id"]
     
+    all_classes = courses.get_all_classes()
+    
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            title, value = entry.split(":")
+            if title not in all_classes:
+                abort(403)
+            if value not in all_classes[title]:
+                abort(403)
+            classes.append((title, value))
 
     courses.add_course(name, code, grade, credits, user_id, classes)
     
@@ -90,11 +96,17 @@ def update_course():
     grade = request.form["grade"]
     user_id = session["user_id"]
     
+    all_classes = courses.get_all_classes()
+    
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            title, value = entry.split(":")
+            if title not in all_classes:
+                abort(403)
+            if value not in all_classes[title]:
+                abort(403)
+            classes.append((title, value))
 
     
     courses.update_course(course_id, name, code, grade, credits, classes)
