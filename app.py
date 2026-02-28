@@ -252,7 +252,7 @@ def remove_review(review_id):
         reviews.remove_review(review_id)
         flash("Kurssin arvostelu poistettu onnistuneesti!", "success")
 
-    return redirect(f"/course/{review['course_id']}")
+    return redirect(f"/course/{review['course_id']}/show_review")
 
 
 @app.route("/edit_review/<int:review_id>")
