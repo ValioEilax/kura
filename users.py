@@ -8,7 +8,13 @@ def get_user(user_id):
     return result[0] if result else None
 
 def get_courses(user_id):
-    sql = "SELECT id, name, code, credits FROM courses WHERE user_id = ?"
+    sql = """
+    SELECT id, name, code, credits, grade,
+           SUM(credits) OVER() as total_credits, 
+           /* Weighted average calculated across all rows */
+           (SUM(grade * credits) OVER() * 1.0 / SUM(credits) OVER()) as grade_avg 
+    FROM courses 
+    WHERE user_id = ?"""
     return db.query(sql, [user_id])
 
 def create_user(username, password1):

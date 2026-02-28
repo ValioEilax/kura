@@ -1,28 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %}{{ user.username }} - Kura{% endblock %}
+{% block title %}{{ user.username }} - Omat sivut{% endblock %}
 
 {% block content %}
-<h2>{{ user.username }} – omat sivut</h2>
+<h3>{{ user.username }} – Omat sivut</h3>
 
 {% for message in get_flashed_messages() %}
-  <p><strong>{{ message }}</strong></p>
+  <div class="flash">{{ message }}</div>
 {% endfor %}
 
-<p>Käyttäjällä on yhteensä {{ courses | count }} kurssia.</p>
+<section class="card stats-section">
+  <h4 style="text-align: left;">Käyttäjän tilastot</h4>
+  
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-label">Suoritettuja kursseja</span>
+      <strong class="stat-value">{{ courses | count }}</strong>
+    </div>
+    
+    <div class="stat-item">
+      <span class="stat-label">Opintopisteet</span>
+      <strong class="stat-value">
+        {{ courses[0].total_credits if courses else 0 }} op
+      </strong>
+    </div>
+    
+    <div class="stat-item">
+      <span class="stat-label">Opintojen keskiarvo</span>
+      <strong class="stat-value">
+        {{ "%.2f" | format(courses[0].grade_avg if courses else 0) }}
+      </strong>
+    </div>
+  </div>
+</section>
 
-<h2>Käyttäjän suoritetut kurssit</h2>
-{% if courses %}
-  <ul>
-    {% for course in courses %}
-      <li>
-        <a href="/course/{{ course.id }}">
-          {{ course.code }} {{ course.name }} ({{ course.credits }} op)
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>Ei lisättyjä kursseja</p>
-{% endif %}
+<section class="section">
+  <h4>Suoritetut kurssit</h4>
+  {% if courses %}
+    <ul class="course-list">
+      {% for course in courses %}
+        <li class="course-item">
+          <a href="/course/{{ course.id }}">
+            <strong>{{ course.code }}</strong> {{ course.name }} ({{ course.credits }} op)
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty-state">Ei suoritettuja kursseja vielä.</p>
+  {% endif %}
+</section>
 {% endblock %}

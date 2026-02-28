@@ -201,6 +201,41 @@ small {
   color: #64748b;
 }
 
+/* --- Statistics Grid Styling --- */
+.stats-grid {
+  display: flex;
+  justify-content: space-around; /* Distributes items evenly */
+  margin-top: 20px;
+  text-align: center; /* Centers text globally within the grid */
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column; /* Stack label and value vertically */
+  align-items: center; /* Center items horizontally in the column */
+  flex: 1; /* Gives each item equal width */
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #64748b; /* slate-500 (muted color like in the image) */
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 1.5rem; /* Larger font for the numbers */
+  font-weight: 800;
+  color: #0f172a; /* slate-900 */
+}
+
+/* Responsive adjustment for small screens */
+@media (max-width: 640px) {
+  .stats-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
 /* --- Navigation / Links / Buttons --- */
 a {
   color: #2563eb; /* blue-600 */
