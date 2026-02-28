@@ -11,8 +11,8 @@
 
   {% if session.user_id == course.user_id %}
     <p>
-      <a href="/edit_course/{{ course.id }}">Muokkaa kurssia</a>
       <a href="/course/{{ course.id }}/new_review" class="button">Luo arvostelu</a>
+      <a href="/edit_course/{{ course.id }}">Muokkaa kurssia</a>
       <a href="/remove_course/{{ course.id }}">Poista kurssi</a>
     </p>
   {% endif %}
