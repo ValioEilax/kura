@@ -24,7 +24,8 @@ def show_user(user_id):
     if not user:
         abort(404)
     courses = users.get_courses(user_id)
-    return render_template("show_user.html", user=user, courses=courses)
+    reviews = users.get_reviews(user_id)
+    return render_template("show_user.html", user=user, courses=courses, reviews=reviews)
 
 @app.route("/find_course")
 def find_course():

@@ -49,5 +49,23 @@
   {% else %}
     <p class="empty-state">Ei suoritettuja kursseja vielä.</p>
   {% endif %}
+
+
+<section class="section">
+  <h4>Tehdyt arvostelut</h4>
+  {% if reviews %}
+    <ul class="review-list">
+      {% for review in reviews %}
+        <li class="review-item">
+          <a class="review-link" href="/course/{{ review.course_id }}/show_review">
+            {{ review.name }} {{ "★" * (review.rating | int) }}{{ "☆" * (5 - (review.rating | int)) }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty-state">Ei tehtyjä arvosteluja vielä.</p>
+  {% endif %}
 </section>
+
 {% endblock %}

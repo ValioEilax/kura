@@ -18,6 +18,15 @@ def get_courses(user_id):
     WHERE user_id = ?"""
     return db.query(sql, [user_id])
 
+def get_reviews(user_id):
+    sql = """
+    SELECT r.id, r.course_id, r.user_id, r.rating, c.name
+    FROM reviews r
+    JOIN courses c ON c.id = r.course_id  
+    WHERE r.user_id = ?
+    """
+    return db.query(sql, [user_id])
+
 
 def create_user(username, password1):
     password_hash = generate_password_hash(password1)
