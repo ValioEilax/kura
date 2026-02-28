@@ -16,8 +16,10 @@
       <a class="brand-title" href="/">KURA</a>
       <nav class="main-nav">
         <a href="/">Etusivu</a>
+        {% if session.username %}
         <a href="/user/{{ session.user_id }}">Omat sivut</a>
         <a href="/new_course">Lisää kurssi</a>
+        {% endif %}
         <a href="/find_course">Etsi kurssi</a>
       </nav>
     </div>
