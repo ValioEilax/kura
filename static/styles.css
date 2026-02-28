@@ -258,59 +258,23 @@ a:hover {
 button,
 input[type="submit"] {
   display: inline-block;
-  border: 1px solid transparent;
-  background: #2563eb;
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
+  border: none;
+  background: #2563eb; /* Vibrant blue */
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 14px; /* Rounded corners as seen in the image */
+  font-weight: 700; /* Bold text */
+  font-size: 1rem;
   cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease,
-    box-shadow 0.15s ease;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+  text-align: center;
 }
+
 button:hover,
 .button:hover,
 .btn:hover,
 input[type="submit"]:hover {
-  background: #1d4ed8;
-}
-
-.button.ghost,
-.btn.logout {
-  background: transparent;
-  color: #0f172a;
-  border-color: #e2e8f0;
-}
-.button.ghost:hover,
-.btn.logout:hover {
-  background: #f1f5f9;
-}
-
-.button.outline,
-.btn.register,
-.btn.add-course,
-.btn.find-course {
-  background: transparent;
-  color: #2563eb;
-  border-color: #2563eb;
-}
-.button.outline:hover,
-.btn.register:hover,
-.btn.add-course:hover,
-.btn.find-course:hover {
-  background: rgba(37, 99, 235, 0.08);
-}
-
-.button.primary {
-  background: #2563eb;
-  color: #fff;
-  border-color: #2563eb;
-}
-.button.primary:hover {
   background: #1d4ed8;
 }
 
