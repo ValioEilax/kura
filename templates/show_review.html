@@ -41,6 +41,7 @@
 
         {% if session.user_id == comment.user_id %}
           <form action="/comment/{{ comment.id }}/delete" method="post" class="comment-delete">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit" onclick="return confirm('Haluatko varmasti poistaa kommentin?')">Poista</button>
           </form>
         {% endif %}
@@ -53,6 +54,7 @@
   <hr>
   <h4>Lisää kommentti</h4>
   <form action="/review/{{ review.id }}/comment" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <p>
       <label for="comment-content">Kommentti:</label><br>
       <textarea id="comment-content" name="content" rows="3" cols="40" maxlength="250" required placeholder="Kirjoita tähän..."></textarea>

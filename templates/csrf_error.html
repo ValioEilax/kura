@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Istunto vanhentunut – Kura{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center; padding: 40px 20px;">
+  <h1 style="color: #ef4444;">Hups! Jokin meni vikaan</h1>
+  
+  <p><strong>Turvallisuustarkistus epäonnistui.</strong></p>
+  
+  <div style="background: #fff1f2; border: 1px solid #fecaca; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <p style="margin: 0; color: #991b1b;">
+      <strong>Syy:</strong> {{ reason }}
+    </p>
+  </div>
+
+  <p>Tämä johtuu yleensä siitä, että olet ollut samalla sivulla liian kauan ja istuntosi on vanhentunut turvallisuussyistä.</p>
+  
+  <div class="actions" style="margin-top: 30px; display: flex; gap: 10px; justify-content: center;">
+    <a href="/" class="button">Palaa etusivulle</a>
+    <a href="/login" class="button" style="background: #64748b;">Kirjaudu uudelleen</a>
+  </div>
+</div>
+{% endblock %}

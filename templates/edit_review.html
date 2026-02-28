@@ -10,6 +10,7 @@
   {% endfor %}
 
   <form action="/update_review" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <p>
       <label for="difficulty">Vaikeusaste (1–5):</label><br>
       <input id="difficulty" type="number" name="difficulty" min="1" max="5" required value="{{ review.difficulty }}">

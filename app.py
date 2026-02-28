@@ -1,12 +1,20 @@
 import sqlite3
 from flask import Flask
 from flask import redirect, render_template, request, session, flash, abort
+from flask_wtf.csrf import CSRFProtect, CSRFError
 import config
 import db, courses, reviews, users
 import re
 
+
 app = Flask(__name__)
 app.secret_key = config.secret_key
+csrf = CSRFProtect(app)
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(e):
+    return render_template('csrf_error.html', reason=e.description), 400
+
 
 def require_login():
     if "user_id" not in session:
@@ -59,6 +67,7 @@ def new_course():
 @app.route("/create_course", methods=["POST"])
 def create_course():
     require_login()
+    
 
     name = request.form["name"]
     if not name or len(name) > 50: 

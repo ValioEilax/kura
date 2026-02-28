@@ -13,6 +13,7 @@
   {% endfor %}
 
   <form action="/remove_review/{{ review.id }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <p>
       <button type="submit" name="remove" value="1">Poista arvostelu</button>
       <button type="submit" name="back" value="1">Palaa takaisin</button>
