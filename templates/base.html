@@ -20,8 +20,10 @@
           <span class="user-id">ID: {{ session.user_id }}</span>
         </div>
         <nav class="actions">
-          <a class="button home" href="{{ url_for('index') }}">Etusivu</a>
-          <a class="button ghost" href="{{ url_for('logout') }}">Kirjaudu ulos</a>
+          <a class="button home" href="{{ url_for('index') }}">Etusivu</a> |
+          <a class="button own-page" href="/user/{{ session.user_id }}">Omat sivut</a> | 
+          <a class="button ghost" href="{{ url_for('logout') }}
+          ">Kirjaudu ulos</a>
           <a class="button primary" href="{{ url_for('new_course') }}">Lisää kurssi</a>
           <a class="button outline" href="{{ url_for('find_course') }}">Etsi kurssi</a>
         </nav>
@@ -31,7 +33,7 @@
         <nav class="auth-actions">
           <a class="button home" href="{{ url_for('index') }}">Etusivu</a> |
           <a class="button primary" href="{{ url_for('login') }}">Kirjaudu sisään</a> | 
-          <a class="button outline" href="{{ url_for('register') }}">Luo tunnus</a> 
+          <a class="button outline" href="{{ url_for('register') }}">Luo tunnus</a>
         </nav>
       </section>
     {% endif %}
