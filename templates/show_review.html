@@ -30,7 +30,7 @@
       <div style="border-bottom: 1px solid #eee; margin-bottom: 10px; padding-bottom: 5px;">
         <strong>{{ comment.username }}</strong> 
         <small style="color: gray;">({{ comment.created_at }})</small>
-        <p>{{ comment.content }}</p>
+        <p style="white-space: pre-wrap;">{{ comment.content }}</p>
 
         {% if session.user_id == comment.user_id %}
           <form action="/comment/{{ comment.id }}/delete" method="POST" style="display: inline;">
@@ -51,7 +51,7 @@
     <h4>Lisää kommentti</h4>
     <form action="/review/{{ review.id }}/comment" method="post">
       <p>
-        <textarea name="content" rows="3" cols="40" required placeholder="Kirjoita tähän..."></textarea>
+        <textarea name="content" rows="3" cols="40" required maxlength = "250" placeholder="Kirjoita tähän..."></textarea>
       </p>
       <button type="submit">Lähetä kommentti</button>
     </form>
