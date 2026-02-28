@@ -19,13 +19,13 @@
     {% for course in results %}
       <li>
         <a href="/user/{{ course.user_id }}"><strong>{{ course.username }}</strong></a>
-        suoritti kurssin:
+        |
         <a href="/course/{{ course.id }}">
           {{ course.code }} {{ course.name }} ({{ course.credits }} op)
         </a>
       </li>
     {% else %}
-      <li>Ei tuloksia hakusanalla.</li>
+      <p class="empty-state">Haku ei tuottanut tuloksia. Voit hakea kursseja nimen, koodin tai käyttäjänimen perusteella.</p>
     {% endfor %}
   </ul>
 {% endif %}
