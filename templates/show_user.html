@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}{{ user.username }} - Omat sivut{% endblock %}
+{% block title %}{{ user.username }} - Profiili{% endblock %}
 
 {% block content %}
-<h3>{{ user.username }} – Omat sivut</h3>
+<h3>{{ user.username }} – Profiili</h3>
 
 {% for message in get_flashed_messages() %}
   <div class="flash">{{ message }}</div>
