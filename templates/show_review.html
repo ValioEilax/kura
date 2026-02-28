@@ -23,7 +23,7 @@
   <p><strong>Vaikeustaso:</strong> {{ review.difficulty }}</p>
   <p><strong>Käytetty aika viikossa:</strong> {{ review.workload }}</p>
   <p><strong>Arvosana:</strong> {{ review.rating }}</p>
-  <p><strong>Palaute:</strong> {{ review.feedback }}</p>
+  <p class="review-feedback"><strong>Palaute:</strong> {{ review.feedback }}</p>
 
   <hr>
   <h3>Kommentit</h3>
@@ -37,7 +37,7 @@
           </a>
           <small class="comment-date">({{ comment.created_at }})</small>
         </header>
-        <p style="white-space: pre-wrap;">{{ comment.content }}</p>
+        <p class="comment-content">{{ comment.content }}</p>
 
         {% if session.user_id == comment.user_id %}
           <form action="/comment/{{ comment.id }}/delete" method="post" class="comment-delete">

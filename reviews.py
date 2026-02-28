@@ -32,7 +32,7 @@ def get_review(course_id):
     sql = """
     SELECT r.id, r.difficulty, r.workload, r.rating, r.feedback,
             r.created_at,
-            c.idAS course_id, c.name AS course_name,
+            c.id AS course_id, c.name AS course_name,
             u.id AS user_id, u.username AS reviewer_name
     FROM reviews r
     JOIN courses c ON c.id = r.course_id
