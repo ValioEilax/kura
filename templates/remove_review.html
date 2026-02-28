@@ -1,15 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Arvostelun poisto</title>
-  </head>
-  <body>
-    <h1>Arvostelun poisto</h1>
-    <p>Kurssi: {{ review.course_name }}</p>
-    <p>Haluatko varmasti poistaa tämän kurssin arvostelun?</p>
-    <form action="/remove_review/{{ review.id }}" method="post">
-      <input type="submit" name="remove" value="Poista arvostelu" />
-      <input type="submit" name="back" value="Palaa takaisin" />
-    </form>
-  </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Arvostelun poisto – Kura{% endblock %}
+
+{% block content %}
+  <h1>Arvostelun poisto</h1>
+
+  <p><strong>Kurssi:</strong> {{ review.course_name }}</p>
+  <p>Haluatko varmasti poistaa tämän kurssin arvostelun?</p>
+
+  {% for message in get_flashed_messages() %}
+    <p><strong>{{ message }}</strong></p>
+  {% endfor %}
+
+  <form action="/remove_review/{{ review.id }}" method="post">
+    <p>
+      <button type="submit" name="remove" value="1">Poista arvostelu</button>
+      <button type="submit" name="back" value="1">Palaa takaisin</button>
+    </p>
+  </form>
+
+  <p><a href="/course/{{ review.course_id }}/show_review">Peruuta</a></p>
+{% endblock %}
