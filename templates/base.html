@@ -9,44 +9,38 @@
 <body>
 
   <!-- Shared header, visible on every page -->
-  <header class="site-header">
-    <nav class="top-nav">
-      <h1 class="header-title">KURA</h1>
-    </nav>
+<header class="site-header">
+  <div class="container header-bar">
+    <!-- Left: brand + primary nav -->
+    <div class="header-left">
+      <a class="brand-title" href="/">KURA</a>
+      <nav class="main-nav">
+        <a href="/">Etusivu</a>
+        <a href="/user/{{ session.user_id }}">Omat sivut</a>
+        <a href="/new_course">Lisää kurssi</a>
+        <a href="/find_course">Etsi kurssi</a>
+      </nav>
+    </div>
 
-    {% if session.username %}
-      <section class="card user-info">
-        <div class="user-meta">
-          <strong class="user-name">{{ session.username }}</strong>
-          <span class="user-id">ID: {{ session.user_id }}</span>
-        </div>
-        <nav class="actions">
-          <a class="button home" href="{{ url_for('index') }}">Etusivu</a>
-          <a class="button own-page" href="/user/{{ session.user_id }}">Omat sivut</a>
-          <a class="button ghost" href="{{ url_for('logout') }}
-          ">Kirjaudu ulos</a>
-          <a class="button primary" href="{{ url_for('new_course') }}">Lisää kurssi</a>
-          <a class="button outline" href="{{ url_for('find_course') }}">Etsi kurssi</a>
-        </nav>
-      </section>
-    {% else %}
-      <section class="card auth-card">
-        <nav class="auth-actions">
-          <a class="button home" href="{{ url_for('index') }}">Etusivu</a>
-          <a class="button primary" href="{{ url_for('login') }}">Kirjaudu sisään</a>
-          <a class="button outline" href="{{ url_for('register') }}">Luo tunnus</a>
-        </nav>
-      </section>
-    {% endif %}
-  </header>
+    <!-- Right: auth/user area -->
+    <div class="header-right">
+      {% if session.username %}
+        <a class="logout" href="/logout">Kirjaudu ulos</a>
+        <span class="user-chip">
+          {{ session.username }} <span class="muted">ID: {{ session.user_id }}</span>
+        </span>
+      {% else %}
+        <a class="login" href="/login">Kirjaudu sisään</a>
+        <a class="register" href="/register">Luo tunnus</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
 
   <!-- Page-specific content -->
   <main class="content">
     {% block content %}{% endblock %}
   </main>
-
-  <!-- Optional: shared footer -->
-  {% block footer %}{% endblock %}
 
 </body>
 </html>
