@@ -27,19 +27,19 @@ Tämä lista yhdistää kurssimateriaalin esimerkkisovelluksen osat ja projektin
 - [x] **Osa 16:** Arvostelun tekeminen (Arvosana, vaikeus, työmäärä)
 - [x] **Osa 17:** Arvostelun kelvollisuuden tarkastaminen (Validointi)
 - [x] **Osa 11:** Käyttäjän syötteiden rajoittaminen (Pisteasteikot ja pituudet)
-- [ ] **Osa 22:** Kurssisivujen parantaminen (Keskiarvojen laskenta SQL:llä)
+- [x] **Osa 22:** Kurssisivujen parantaminen (Keskiarvojen laskenta SQL:llä)
 
 ## 6. Kuvat ja profiilit
-- [ ] **Osa 18:** Profiilikuvan lisääminen (BLOB-tallennus)
-- [ ] **Osa 19:** Kuvien hallinnointi (Näyttäminen ja poistaminen, alt-tekstit)
+- [ ] **SKIP Osa 18:** Profiilikuvan lisääminen (BLOB-tallennus) 
+- [ ] **SKIP Osa 19:** Kuvien hallinnointi (Näyttäminen ja poistaminen, alt-tekstit) 
 
 ## 7. Laatu ja tietoturva
 - [x] **Osa 8:** Oikeuksien tarkastaminen (CRUD-logiikan varmistus)
 - [x] **Osa 9:** Tiedon löytymisen tarkastaminen (Virheiden käsittely)
-- [ ] **Osa 23:** Virheviestien parantaminen (Flash-viestit käyttäjälle)
+- [x] **Osa 23:** Virheviestien parantaminen (Flash-viestit käyttäjälle)
 - [ ] **Osa 24:** CSRF-aukon estäminen (Token-pohjainen suojaus)
 
 ## 8. Viimeistely ja palautus
-- [ ] **Osa 20-21:** Ulkoasun yhtenäistäminen (Base template) ja CSS-tyylit
+- [x] **Osa 20-21:** Ulkoasun yhtenäistäminen (Base template) ja CSS-tyylit
 - [ ] **Osa 25:** Käytettävyyden parantaminen (Navigaatio ja sivutus)
 - [ ] **Osa 26:** Lopullinen README.md, Pylint-tarkistus ja testausraportti
