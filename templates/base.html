@@ -10,8 +10,7 @@
   <!-- Shared header, visible on every page -->
   <header class="site-header">
     <nav class="top-nav">
-      <!-- Link to the home page -->
-      <a class="home-link" href="{{ url_for('index') }}">Kura</a>
+      <h1 class="header-title">KURA</h1>
     </nav>
 
     {% if session.username %}
@@ -21,6 +20,7 @@
           <span class="user-id">ID: {{ session.user_id }}</span>
         </div>
         <nav class="actions">
+          <a class="button home" href="{{ url_for('index') }}">Etusivu</a>
           <a class="button ghost" href="{{ url_for('logout') }}">Kirjaudu ulos</a>
           <a class="button primary" href="{{ url_for('new_course') }}">Lisää kurssi</a>
           <a class="button outline" href="{{ url_for('find_course') }}">Etsi kurssi</a>
@@ -29,8 +29,9 @@
     {% else %}
       <section class="card auth-card">
         <nav class="auth-actions">
-          <a class="button primary" href="{{ url_for('login') }}">Kirjaudu sisään</a>
-          <a class="button outline" href="{{ url_for('register') }}">Luo tunnus</a>
+          <a class="button home" href="{{ url_for('index') }}">Etusivu</a> |
+          <a class="button primary" href="{{ url_for('login') }}">Kirjaudu sisään</a> | 
+          <a class="button outline" href="{{ url_for('register') }}">Luo tunnus</a> 
         </nav>
       </section>
     {% endif %}

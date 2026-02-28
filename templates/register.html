@@ -1,34 +1,30 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Rekisteröinti</title>
-  </head>
+{% extends "base.html" %}
 
-  <body>
-    {%- for message in get_flashed_messages() -%}
-      <p><b>{{ message }}</b></p>
-    {%- endfor -%}
+{% block title %}Luo tunnus – Kura{% endblock %}
 
-    <form action="/create" method="post">
-      <p>
-        Tunnus: <br />
-        <input type="text" name="username" />
-      </p>
-      <p>
-        Salasana: <br />
-        <input type="password" name="password1" />
-      </p>
-      <p>
-        Salasana uudestaan: <br />
-        <input type="password" name="password2" />
-      </p>
-      <input type="submit" value="Luo tunnus" />
-    </form>
+{% block content %}
+  <h2>Luo tunnus</h2>
+
+  {% for message in get_flashed_messages() %}
+    <p><strong>{{ message }}</strong></p>
+  {% endfor %}
+
+  <form action="/create" method="post">
     <p>
-      <a href="/">Takaisin etusivulle</a>
+      <label for="username">Tunnus:</label><br>
+      <input id="username" type="text" name="username" required>
     </p>
     <p>
-    Minulla on jo käyttäjätunnus <a href="/login">Kirjaudu sisään</a>
-  </p>
-  </body>
-</html>
+      <label for="password1">Salasana:</label><br>
+      <input id="password1" type="password" name="password1" required>
+    </p>
+    <p>
+      <label for="password2">Salasana uudestaan:</label><br>
+      <input id="password2" type="password" name="password2" required>
+    </p>
+    <p>
+      <button type="submit">Luo tunnus</button>
+    </p>
+  </form>
+
+{% endblock %}

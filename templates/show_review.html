@@ -1,65 +1,68 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>{{ review.course_name }} - arvostelu</title>
-  </head>
-  <body>
-    <h1>Käyttäjän {{ review.reviewer_name }} arvostelu kurssista {{ review.course_name }}</h1>
+{% extends "base.html" %}
 
-    {%- for message in get_flashed_messages() -%}
-      <p><b>{{ message }}</b></p>
-    {%- endfor -%}
+{% block title %}Arvostelu - {{ review.course_name }} - Kura{% endblock %}
 
-    {% if session.user_id == review.user_id %}
+{% block content %}
+  <h3>
+    Käyttäjän <a href="/user/{{ review.user_id }}">{{ review.reviewer_name }}</a> 
+    arvostelu kurssista 
+    <a href="/course/{{ review.course_id }}">{{ review.course_name }}</a>
+  </h3>
+
+  {% for message in get_flashed_messages() %}
+    <p><strong>{{ message }}</strong></p>
+  {% endfor %}
+
+  {% if session.user_id == review.user_id %}
     <p>
       <a href="/edit_review/{{ review.id }}">Muokkaa arvostelua</a>
       <a href="/remove_review/{{ review.id }}">Poista arvostelu</a>
     </p>
-    {% endif %}
+  {% endif %}
 
-      <p><strong>Vaikeustaso:</strong> {{ review.difficulty }}</p>
-      <p><strong>Käytetty aika viikossa:</strong> {{ review.workload }}</p>
-      <p><strong>Arvosana:</strong> {{ review.rating }}</p>
-      <p><strong>Palaute:</strong> {{ review.feedback }}</p>
-    </p>
+  <p><strong>Vaikeustaso:</strong> {{ review.difficulty }}</p>
+  <p><strong>Käytetty aika viikossa:</strong> {{ review.workload }}</p>
+  <p><strong>Arvosana:</strong> {{ review.rating }}</p>
+  <p><strong>Palaute:</strong> {{ review.feedback }}</p>
 
-    <hr>
-    <h3>Kommentit</h3>
+  <hr>
+  <h3>Kommentit</h3>
 
+  {% if comments %}
     {% for comment in comments %}
-      <div style="border-bottom: 1px solid #eee; margin-bottom: 10px; padding-bottom: 5px;">
-        <strong>{{ comment.username }}</strong> 
-        <small style="color: gray;">({{ comment.created_at }})</small>
+      <article class="comment">
+        <header class="comment-header">
+          <a href="/user/{{ comment.user_id }}" class="comment-author">
+            <strong>{{ comment.username }}</strong>
+          </a>
+          <small class="comment-date">({{ comment.created_at }})</small>
+        </header>
         <p style="white-space: pre-wrap;">{{ comment.content }}</p>
 
         {% if session.user_id == comment.user_id %}
-          <form action="/comment/{{ comment.id }}/delete" method="POST" style="display: inline;">
-            <button type="submit" 
-                    style="background: none; border: none; color: red; cursor: pointer; text-decoration: underline; padding: 0;"
-                    onclick="return confirm('Haluatko varmasti poistaa kommentin?')">
-              Poista
-            </button>
+          <form action="/comment/{{ comment.id }}/delete" method="post" class="comment-delete">
+            <button type="submit" onclick="return confirm('Haluatko varmasti poistaa kommentin?')">Poista</button>
           </form>
         {% endif %}
-      </div>
-    {% else %}
-      <p>Ei vielä kommentteja. Ole ensimmäinen!</p>
+      </article>
     {% endfor %}
+  {% else %}
+    <p>Ei vielä kommentteja. Ole ensimmäinen!</p>
+  {% endif %}
 
-    <hr>
-
-    <h4>Lisää kommentti</h4>
-    <form action="/review/{{ review.id }}/comment" method="post">
-      <p>
-        <textarea name="content" rows="3" cols="40" required maxlength = "250" placeholder="Kirjoita tähän..."></textarea>
-      </p>
-      <button type="submit">Lähetä kommentti</button>
-    </form>
-
+  <hr>
+  <h4>Lisää kommentti</h4>
+  <form action="/review/{{ review.id }}/comment" method="post">
     <p>
-      <a href="/course/{{ review.course_id }}">Takaisin kurssisivulle</a>
-      <a href="/">Takaisin etusivulle</a>
+      <label for="comment-content">Kommentti:</label><br>
+      <textarea id="comment-content" name="content" rows="3" cols="40" maxlength="250" required placeholder="Kirjoita tähän..."></textarea>
     </p>
+    <p>
+      <button type="submit">Lähetä kommentti</button>
+    </p>
+  </form>
 
-  </body>
-</html>
+  <p>
+    <a href="/">Takaisin etusivulle</a>
+  </p>
+{% endblock %}

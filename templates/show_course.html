@@ -1,41 +1,35 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>{{ course.name }}</title>
-  </head>
-  <body>
-    <h1>{{ course.name }}</h1>
+ {% extends "base.html" %}
 
-    {%- for message in get_flashed_messages() -%}
-      <p><b>{{ message }}</b></p>
-    {%- endfor -%}
+{% block title %}Kurssi - {{ course.name }} - Kura{% endblock %}
 
-    {% if session.user_id == course.user_id %}
+{% block content %}
+ <h2>{{ course.name }}</h1>
 
+  {% for message in get_flashed_messages() %}
+    <p><strong>{{ message }}</strong></p>
+  {% endfor %}
+
+  {% if session.user_id == course.user_id %}
     <p>
       <a href="/edit_course/{{ course.id }}">Muokkaa kurssia</a>
       <a href="/course/{{ course.id }}/new_review" class="button">Luo arvostelu</a>
       <a href="/remove_course/{{ course.id }}">Poista kurssi</a>
     </p>
-    {% endif %}
+  {% endif %}
 
-      <p><strong>Koodi:</strong> {{ course.code }}</p>
-      <p><strong>Arvosana:</strong> {{ course.grade }}</p>
-      <p><strong>Opintopisteet:</strong> {{ course.credits }} op</p>
-      <p><strong>Lisännyt käyttäjä:</strong> <a href="/user/{{ course.user_id }}">{{ course.username }}</a></p>
-      {% if classes %}
-      <p>
-        <strong>Luokat:</strong>
-        <ul>
-          {% for class in classes %}
-          <li>
-            {{ class.title }}: {{ class.value }}
-          </li>
-          {% endfor %}
-        </ul>
-      </p>
-      {% endif %}
-      <a href="/">Takaisin etusivulle</a>
-    </p>
-  </body>
-</html>
+  <p><strong>Koodi:</strong> {{ course.code }}</p>
+  <p><strong>Arvosana:</strong> {{ course.grade }}</p>
+  <p><strong>Opintopisteet:</strong> {{ course.credits }} op</p>
+  <p><strong>Lisännyt käyttäjä:</strong> <a href="/user/{{ course.user_id }}">{{ course.username }}</a></p>
+
+  {% if classes %}
+    <div>
+      <strong>Luokat:</strong>
+      <ul>
+        {% for class in classes %}
+          <li>{{ class.title }}: {{ class.value }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,21 +1,22 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Etsi suorituksia</title>
-  </head>
-  <body>
-    <h1>Etsi suorituksia</h1>
+{% extends "base.html" %}
 
-    <form action="/find_course" method="get">
-      <p>Hakusana: <input type="text" name="query" value="{{ query }}" /></p>
-      <input type="submit" value="Lähetä" />
-    </form>
+{% block title %}Etsi kurssi - Kura{% endblock %}
 
-    {% if query %}
-    <h2>Tulokset</h2>
+{% block content %}
+<h2>Etsi suorituksia</h2>
 
-    <ul>
-      {% for course in results %}
+<form action="/find_course" method="get">
+  <p>
+    <label for="query">Hakusana:</label>
+    <input id="query" type="text" name="query" value="{{ query|default('') }}">
+    <button type="submit">Lähetä</button>
+  </p>
+</form>
+
+{% if query %}
+  <h2>Tulokset</h2>
+  <ul>
+    {% for course in results %}
       <li>
         <a href="/user/{{ course.user_id }}"><strong>{{ course.username }}</strong></a>
         suoritti kurssin:
@@ -23,13 +24,9 @@
           {{ course.code }} {{ course.name }} ({{ course.credits }} op)
         </a>
       </li>
-      {% else %}
+    {% else %}
       <li>Ei tuloksia hakusanalla.</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    <p>
-      <a href="/">Takaisin etusivulle</a>
-    </p>
-  </body>
-</html>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}

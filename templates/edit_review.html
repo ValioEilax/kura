@@ -1,28 +1,43 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Muokkaa arvostelua</title>
-  </head>
-  <body>
-    <form action="/update_review" method="post">
-      <p>
-        Vaikeusaste: <br />
-        <input type="number" name="difficulty" min="1" max="5" required value="{{ review.difficulty }}" />
-      </p>
-      <p>
-        Työmäärä (tuntia/vko): <br />
-        <input type="number" name="workload" min="1" max="112" required value="{{ review.workload }}" />
-      </p>
-      <p>
-        Annettu arvosana: <br />
-        <input type="number" name="rating" size="8" min="0" max="5" required value="{{ review.rating }}" />
-      </p>
-      <p>
-        Palaute:<br>
-        <textarea name="feedback" rows="5" cols="40" maxlength="1000" required>{{ review.feedback }}</textarea>
-     </p>
-      <input type="hidden" name="review_id" value="{{ review.id }}" />
-      <input type="submit" value="Päivitä arvostelua" />
-    </form>
-  </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Muokkaa arvostelua – Kura{% endblock %}
+
+{% block content %}
+  <h2>Muokkaa arvostelua</h2>
+
+  {% for message in get_flashed_messages() %}
+    <p><strong>{{ message }}</strong></p>
+  {% endfor %}
+
+  <form action="/update_review" method="post">
+    <p>
+      <label for="difficulty">Vaikeusaste (1–5):</label><br>
+      <input id="difficulty" type="number" name="difficulty" min="1" max="5" required value="{{ review.difficulty }}">
+    </p>
+
+    <p>
+      <label for="workload">Työmäärä (tuntia/vko):</label><br>
+      <input id="workload" type="number" name="workload" min="1" max="112" required value="{{ review.workload }}">
+    </p>
+
+    <p>
+      <label for="rating">Annettu arvosana (0–5):</label><br>
+      <input id="rating" type="number" name="rating" min="0" max="5" required value="{{ review.rating }}">
+    </p>
+
+    <p>
+      <label for="feedback">Palaute:</label><br>
+      <textarea id="feedback" name="feedback" rows="5" cols="40" maxlength="1000" required>{{ review.feedback }}</textarea>
+    </p>
+
+    <input type="hidden" name="review_id" value="{{ review.id }}">
+
+    <p>
+      <button type="submit">Päivitä arvostelua</button>
+    </p>
+  </form>
+
+  <p>
+    <a href="/course/{{ review.course_id }}/show_review">Peruuta</a>
+  </p>
+{% endblock %}

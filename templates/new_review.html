@@ -1,29 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lisää arvostelu</title>
-</head>
-<body>
-    <h2>Arvostele kurssi: {{ course.name }}</h2>
+{% extends "base.html" %}
 
-<form action="/course/{{ course.id }}/create_review" method="POST">
-    <p>Vaikeusaste (1-5):<br>
-    <input type="number" name="difficulty" min="1" max="5" required></p>
-    
-    <p>Työmäärä (tuntia/vko):<br>
-    <input type="number" name="workload" min="1" max="112" required></p>
-    
-    <p>Arvosana kurssille (0-5):<br>
-    <input type="number" name="rating" min="0" max="5" required></p>
-    
-    <p>Palaute:<br>
-    <textarea name="feedback" rows="5" cols="40" maxlength="1000" required></textarea></p>
-    
-    <button type="submit">Lähetä arvostelu</button>
-    
+{% block title %}Lisää arvostelu - Kura{% endblock %}
+
+{% block content %}
+  <h2>Arvostele kurssi: {{ course.name }}</h2>
+
+  <form action="/course/{{ course.id }}/create_review" method="post">
     <p>
-      <a href="/">Takaisin etusivulle</a>
+      <label for="difficulty">Vaikeusaste (1–5):</label><br>
+      <input id="difficulty" type="number" name="difficulty" min="1" max="5" required>
     </p>
-</form>
-</body>
-</html>
+
+    <p>
+      <label for="workload">Työmäärä (tuntia/vko):</label><br>
+      <input id="workload" type="number" name="workload" min="1" max="112" required>
+    </p>
+
+    <p>
+      <label for="rating">Arvosana kurssille (0–5):</label><br>
+      <input id="rating" type="number" name="rating" min="0" max="5" required>
+    </p>
+
+    <p>
+      <label for="feedback">Palaute:</label><br>
+      <textarea id="feedback" name="feedback" rows="5" cols="40" maxlength="1000" required></textarea>
+    </p>
+
+    <p>
+      <button type="submit">Lähetä arvostelu</button>
+    </p>
+
+  </form>
+{% endblock %}

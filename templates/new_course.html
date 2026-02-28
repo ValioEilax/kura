@@ -1,44 +1,46 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Lisää uusi kurssi</title>
-  </head>
+html
 
-  <body>
-    <form action="/create_course" method="post">
-      <p>
-        Kurssin nimi: <br />
-        <input type="text" name="name" size="48" maxlength="50" required />
-      </p>
-      <p>
-        Kurssin koodi: <br />
-        <input type="text" name="code" size="16" required/>
-      </p>
-      <p>
-        Saatu arvosana: <br />
-        <input type="number" name="grade" min="0" max="5" size="8" required/>
-      </p>
-      <p>
-        Opintopisteet: <br />
-        <input type="number" name="credits" size="8" min="0" required/> op
-      </p>
-      
-      {% for class in classes %}
-      <p>
-        {{ class }}: <br />
-        <select name="classes">
-          <option value="">(Valitse suoritustapa)</option>
-        {% for option in classes[class] %}
-          <option value="{{ class }}:{{ option }}">{{ option }}</option>
-        {% endfor %}
-        </select>
-      </p>
-      {% endfor %}
+{% extends "base.html" %}
 
-      <input type="submit" value="Luo uusi kurssi" />
-    </form>
-    <p>
-      <a href="/">Takaisin etusivulle</a>
-    </p>
-  </body>
-</html>
+{% block title %}Lisää kurssi - Kura{% endblock %}
+
+{% block content %}
+<form action="{{ url_for('create_course') }}" method="post">
+  <p>
+    <label for="name">Kurssin nimi:</label><br>
+    <input id="name" type="text" name="name" size="48" maxlength="50" required>
+  </p>
+
+  <p>
+    <label for="code">Kurssin koodi:</label><br>
+    <input id="code" type="text" name="code" size="16" required>
+  </p>
+
+  <p>
+    <label for="grade">Saatu arvosana:</label><br>
+    <input id="grade" type="number" name="grade" min="0" max="5" required>
+  </p>
+
+  <p>
+    <label for="credits">Opintopisteet:</label><br>
+    <input id="credits" type="number" name="credits" min="0" required> op
+  </p>
+
+  {% for class in classes %}
+  <p>
+    {{ class }}: <br />
+    <select name="classes">
+      <option value="">(Valitse suoritustapa)</option>
+    {% for option in classes[class] %}
+      <option value="{{ class }}:{{ option }}">{{ option }}</option>
+    {% endfor %}
+    </select>
+  </p>
+  {% endfor %}
+
+  <p>
+    <button type="submit">Luo uusi kurssi</button>
+  </p>
+</form>
+
+{% endblock %}

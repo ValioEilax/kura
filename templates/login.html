@@ -1,45 +1,31 @@
-<!doctype html>
-<html>
+{% extends "base.html" %}
 
-<head>
-  <title>Kirjautuminen</title>
-</head>
+{% block title %}Kirjautuminen – Kura{% endblock %}
 
-<body>
+{% block content %}
   <h2>Kirjaudu sisään</h2>
 
-  {%- for message in get_flashed_messages() -%}
-    <p><b>{{ message }}</b></p>
-  {%- endfor -%}
-  
+  {% for message in get_flashed_messages() %}
+    <p><strong>{{ message }}</strong></p>
+  {% endfor %}
+
   {% if session.username %}
-  <p>
-    Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{
-    session.id }}
-  </p>
-  <p>
-    <a href="/logout">Kirjaudu ulos</a>
-  </p>
+    <p>Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{ session.user_id }}</p>
+    <p><a href="{{ url_for('logout') }}">Kirjaudu ulos</a></p>
   {% else %}
-  <form action="/login" method="post">
-    <p>
-      Tunnus: <br />
-      <input type="text" name="username" />
-    </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password" />
-    </p>
-    <input type="submit" value="Kirjaudu" />
-  </form>
+    <form action="{{ url_for('login') }}" method="post">
+      <p>
+        <label for="username">Tunnus:</label><br>
+        <input id="username" type="text" name="username" required>
+      </p>
+      <p>
+        <label for="password">Salasana:</label><br>
+        <input id="password" type="password" name="password" required>
+      </p>
+      <p>
+        <button type="submit">Kirjaudu</button>
+      </p>
+    </form>
   {% endif %}
 
-  <p>
-    <a href="/">Takaisin etusivulle</a>
-  </p>
-  <p>
-    Eikö sinulla ole käyttäjätunnusta? <a href="/register">Rekisteröidy nyt</a>
-  </p>
-</body>
-
-</html>
+{% endblock %}

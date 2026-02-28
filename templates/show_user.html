@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Käyttäjä {{ user.username }}</title>
-  </head>
-  <body>
-    <h1>{{ user.username }} omat sivut</h1>
+{% extends "base.html" %}
 
-    {%- for message in get_flashed_messages() -%}
-      <p><b>{{ message }}</b></p>
-    {%- endfor -%}
+{% block title %}{{ user.username }} - Kura{% endblock %}
 
-    <p>
-        Käyttäjällä on yhteensä {{ courses | count }} kurssia.
-    </p>
+{% block content %}
+<h2>{{ user.username }} – omat sivut</h2>
 
-    <h2>Käyttäjän suoritetut kurssit</h2>
-    {% if courses %}
-      <ul>
-        {% for course in courses %}
-          <li><a href="/course/{{ course.id }}">{{ course.code }} {{ course.name }} ({{ course.credits }}op)</a></li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Ei lisättyjä kursseja</p>
-    {% endif %}
+{% for message in get_flashed_messages() %}
+  <p><strong>{{ message }}</strong></p>
+{% endfor %}
 
-      <a href="/">Takaisin etusivulle</a>
-    </p>
-  </body>
-</html>
+<p>Käyttäjällä on yhteensä {{ courses | count }} kurssia.</p>
+
+<h2>Käyttäjän suoritetut kurssit</h2>
+{% if courses %}
+  <ul>
+    {% for course in courses %}
+      <li>
+        <a href="/course/{{ course.id }}">
+          {{ course.code }} {{ course.name }} ({{ course.credits }} op)
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Ei lisättyjä kursseja</p>
+{% endif %}
+{% endblock %}
