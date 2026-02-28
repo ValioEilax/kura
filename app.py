@@ -3,6 +3,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session, flash, abort
 import config
 import db, courses, reviews, users
+import re
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -171,6 +172,10 @@ def create():
     password2 = request.form["password2"]
     if password1 != password2:
         flash("VIRHE: salasanat eivät täsmää")
+        return render_template("register.html")
+
+    if not re.match("^[a-zA-Z0-9_]*$", username):
+        flash("Tunnus voi sisältää vain kirjaimia, numeroita ja alaviivoja.")
         return render_template("register.html")
 
     try:
