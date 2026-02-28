@@ -29,7 +29,7 @@
   <p>
     {{ class }}: <br />
     <select name="classes">
-      <option value="">(Valitse suoritustapa)</option>
+      <option value="">(valitse {{ class.lower() }})</option>
     {% for option in classes[class] %}
       <option value="{{ class }}:{{ option }}">{{ option }}</option>
     {% endfor %}
