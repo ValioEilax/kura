@@ -11,6 +11,7 @@ def require_login():
     if "user_id" not in session:
         abort(403)
 
+
 @app.route("/")
 def index():
     all_courses = courses.get_courses()
@@ -49,6 +50,7 @@ def new_course():
 
     classes = courses.get_all_classes()
     return render_template("new_course.html", classes=classes)
+
 
 @app.route("/create_course", methods=["POST"])
 def create_course():
@@ -112,6 +114,7 @@ def update_course():
 
     return redirect("/course/" + str(course_id))
 
+
 @app.route("/edit_course/<int:course_id>")
 def edit_course(course_id):
     require_login()
@@ -130,6 +133,7 @@ def edit_course(course_id):
         classes[entry["title"]] = entry["value"]
 
     return render_template("edit_course.html", course=course, classes=classes, all_classes=all_classes)
+
 
 @app.route("/remove_course/<int:course_id>", methods=["GET", "POST"])
 def remove_course(course_id):
@@ -151,9 +155,11 @@ def remove_course(course_id):
         else:
             return redirect("/course/" + str(course_id))
 
+
 @app.route("/register")
 def register():
     return render_template("register.html")
+
 
 @app.route("/create", methods=["POST"])
 def create():
@@ -190,8 +196,7 @@ def login():
         else:            
             flash("VIRHE: väärä tunnus tai salasana")
             return render_template("login.html")
- 
-@app.route("/my_courses")
+
 
 @app.route("/course/<int:course_id>/new_review")
 def new_review(course_id):
@@ -201,7 +206,7 @@ def new_review(course_id):
 @app.route("/course/<int:course_id>/create_review", methods=["POST"])
 def create_review(course_id):
     require_login()
-    
+
     difficulty = request.form["difficulty"]
     workload = request.form["workload"]
     rating = request.form["rating"]
@@ -227,6 +232,7 @@ def show_review(course_id):
     comments = reviews.get_comments(review["id"])
 
     return render_template("show_review.html", review=review, comments=comments)
+
 
 @app.route("/remove_review/<int:review_id>", methods=["GET", "POST"])
 def remove_review(review_id):
@@ -259,6 +265,7 @@ def edit_review(review_id):
         abort(403)
     return render_template("edit_review.html", review=review)
 
+
 @app.route("/update_review", methods=["POST"])
 def update_review():
     require_login()
@@ -281,6 +288,7 @@ def update_review():
     flash("Kurssin arvostelua muokattu onnistuneesti!", "sucess")
     return redirect("/course/" + str(review["course_id"]) + "/show_review")
 
+
 @app.route("/review/<int:review_id>/comment", methods=["POST"])
 def add_comment(review_id):
     require_login()
@@ -298,6 +306,7 @@ def add_comment(review_id):
 
     return redirect("/course/" + str(review["course_id"]) + "/show_review")
 
+
 @app.route("/comment/<int:comment_id>/delete", methods=["POST"])
 def delete_comment(comment_id):
     require_login()
@@ -314,11 +323,10 @@ def delete_comment(comment_id):
 
     reviews.remove_comment(comment_id, session["user_id"])
     flash("Kommentti poistettu.")
-        
+
     return redirect("/course/" + str(review["course_id"]) + "/show_review")
 
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
-        

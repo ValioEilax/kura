@@ -10,6 +10,7 @@ def add_course(name, code, grade, credits, user_id, classes):
     for title, value in classes:
         db.execute(sql, [course_id, title, value])
 
+
 def get_courses():
     sql = """
         SELECT courses.id, courses.name, courses.code, courses.credits, users.username, user_id 
@@ -18,6 +19,7 @@ def get_courses():
         ORDER BY courses.id DESC
     """
     return db.query(sql)
+
 
 def get_course(course_id):
     sql = """SELECT courses.id,
@@ -34,9 +36,11 @@ def get_course(course_id):
     result = db.query(sql, [course_id])
     return result[0] if result else None
 
+
 def get_classes(course_id):
     sql = "SELECT title, value FROM course_classes WHERE course_id = ?"
     return db.query(sql, [course_id])
+
 
 def get_all_classes():
     sql = "SELECT title, value FROM classes ORDER BY id"
@@ -49,7 +53,8 @@ def get_all_classes():
         classes[title].append(value)
 
     return classes
-    
+
+
 def update_course(course_id, name, code, grade, credits, classes):
     sql = """UPDATE courses 
              SET name = ?, code = ?, grade = ?, credits = ? 
@@ -63,15 +68,20 @@ def update_course(course_id, name, code, grade, credits, classes):
     for title, value in classes:
         db.execute(sql, [course_id, title, value])
 
+
 def remove_course(course_id):
     sql = "DELETE FROM courses WHERE id = ?"
     db.execute(sql, [course_id])   
 
+
 def find_courses(query):
-    sql = """SELECT c.id, c.name, c.code, c.user_id, c.credits, u.username
-             FROM courses c
-             JOIN users u ON c.user_id = u.id
-             WHERE c.name LIKE ? OR c.code LIKE ? OR u.username LIKE ?
-             ORDER BY c.id DESC"""
+    sql = """
+    SELECT c.id, c.name, c.code, c.user_id, c.credits, u.username
+    FROM courses c
+    JOIN users u ON c.user_id = u.id
+    WHERE c.name LIKE ? OR c.code LIKE ? OR u.username LIKE ?
+    ORDER BY c.id DESC
+    """
+
     pattern = "%" + query + "%"
     return db.query(sql, [pattern, pattern, pattern])
