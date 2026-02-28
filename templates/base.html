@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Kura{% endblock %}</title>
+  <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 
@@ -20,8 +21,8 @@
           <span class="user-id">ID: {{ session.user_id }}</span>
         </div>
         <nav class="actions">
-          <a class="button home" href="{{ url_for('index') }}">Etusivu</a> |
-          <a class="button own-page" href="/user/{{ session.user_id }}">Omat sivut</a> | 
+          <a class="button home" href="{{ url_for('index') }}">Etusivu</a>
+          <a class="button own-page" href="/user/{{ session.user_id }}">Omat sivut</a>
           <a class="button ghost" href="{{ url_for('logout') }}
           ">Kirjaudu ulos</a>
           <a class="button primary" href="{{ url_for('new_course') }}">Lisää kurssi</a>
@@ -31,8 +32,8 @@
     {% else %}
       <section class="card auth-card">
         <nav class="auth-actions">
-          <a class="button home" href="{{ url_for('index') }}">Etusivu</a> |
-          <a class="button primary" href="{{ url_for('login') }}">Kirjaudu sisään</a> | 
+          <a class="button home" href="{{ url_for('index') }}">Etusivu</a>
+          <a class="button primary" href="{{ url_for('login') }}">Kirjaudu sisään</a>
           <a class="button outline" href="{{ url_for('register') }}">Luo tunnus</a>
         </nav>
       </section>

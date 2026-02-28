@@ -1,0 +1,390 @@
+/* --- CSS Reset / Base --- */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  color: #0f172a; /* slate-900 */
+  background: #f8fafc; /* slate-50 */
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  margin: 0 0 0.6rem;
+  color: #0f172a;
+}
+p {
+  margin: 0 0 1rem;
+}
+ul,
+ol {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+}
+small {
+  color: #64748b;
+} /* slate-500 */
+
+/* --- Layout Containers --- */
+.page {
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0; /* slate-200 */
+}
+.brand,
+.header-container {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.brand-title {
+  font-size: 1.6rem;
+  margin: 0;
+}
+.subtitle {
+  color: #64748b;
+  margin: 0;
+}
+
+.site-main,
+.content {
+  padding: 16px;
+}
+
+.site-footer {
+  margin-top: 32px;
+  padding: 16px;
+  color: #64748b;
+  text-align: center;
+}
+
+/* --- Cards / Sections --- */
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+.user-info,
+.auth-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.user-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #475569;
+}
+.user-name {
+  font-weight: 700;
+}
+.user-id {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+/* --- Navigation / Links / Buttons --- */
+a {
+  color: #2563eb; /* blue-600 */
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.actions,
+.auth-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.button,
+.btn,
+button,
+input[type="submit"] {
+  display: inline-block;
+  border: 1px solid transparent;
+  background: #2563eb;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+button:hover,
+.button:hover,
+.btn:hover,
+input[type="submit"]:hover {
+  background: #1d4ed8;
+}
+
+.button.ghost,
+.btn.logout {
+  background: transparent;
+  color: #0f172a;
+  border-color: #e2e8f0;
+}
+.button.ghost:hover,
+.btn.logout:hover {
+  background: #f1f5f9;
+}
+
+.button.outline,
+.btn.register,
+.btn.add-course,
+.btn.find-course {
+  background: transparent;
+  color: #2563eb;
+  border-color: #2563eb;
+}
+.button.outline:hover,
+.btn.register:hover,
+.btn.add-course:hover,
+.btn.find-course:hover {
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.button.primary {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+.button.primary:hover {
+  background: #1d4ed8;
+}
+
+/* Pipe-separated nav look (optional) */
+.top-nav a {
+  margin-right: 8px;
+}
+.top-nav a + a::before {
+  content: "|";
+  color: #cbd5e1;
+  margin: 0 8px 0 4px;
+}
+
+/* --- Forms --- */
+form {
+  margin: 16px 0;
+}
+label {
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+input[type="text"],
+input[type="number"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  max-width: 520px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1; /* slate-300 */
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  font-size: 1rem;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+input[type="submit"],
+button[type="submit"] {
+  margin-top: 6px;
+}
+
+.empty,
+.empty-state {
+  color: #64748b;
+}
+
+/* --- Lists --- */
+.course-list,
+.review-list,
+.action-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 12px 0 16px;
+}
+.course-item,
+.review-item,
+.action-item {
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.course-item a,
+.review-item a {
+  text-decoration: none;
+}
+.course-item a:hover,
+.review-item a:hover {
+  text-decoration: underline;
+}
+
+/* --- Comments --- */
+.comment {
+  padding: 12px 12px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.comment-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.comment-author {
+  font-weight: 700;
+}
+.comment-date {
+  color: #64748b;
+}
+.comment-content {
+  white-space: pre-wrap;
+}
+
+.comment-delete button {
+  background: transparent;
+  color: #ef4444; /* red-500 */
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+}
+.comment-delete button:hover {
+  color: #dc2626;
+}
+
+/* --- Messages / Alerts --- */
+.flash,
+.messages p,
+.messages .message {
+  background: #eff6ff; /* blue-50 */
+  border: 1px solid #bfdbfe; /* blue-200 */
+  color: #1e3a8a; /* blue-800 */
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+/* Use this utility class around flashed messages if desired */
+.messages {
+  margin: 12px 0;
+}
+
+/* --- Tables (if any later) --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+th {
+  background: #f1f5f9;
+}
+
+/* --- Utilities --- */
+.section-title {
+  margin-top: 20px;
+}
+.review-link {
+  font-weight: 600;
+}
+.user-link {
+  font-weight: 600;
+}
+
+/* --- Responsive tweaks --- */
+@media (max-width: 640px) {
+  .container {
+    padding: 12px;
+  }
+  .user-info,
+  .auth-card,
+  .actions,
+  .auth-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  input[type="text"],
+  input[type="number"],
+  input[type="password"],
+  textarea,
+  select {
+    max-width: 100%;
+  }
+}
