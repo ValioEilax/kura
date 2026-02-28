@@ -269,6 +269,7 @@ input[type="submit"] {
   text-decoration: none;
   transition: background-color 0.15s ease;
   text-align: center;
+  line-height: 1;
 }
 
 button:hover,

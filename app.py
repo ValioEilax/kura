@@ -40,10 +40,12 @@ def find_course():
 @app.route("/course/<int:course_id>")
 def show_course(course_id):
     course = courses.get_course(course_id)
+    review = courses.get_review(course_id)
+    
     if not course:
         abort(404)
     classes = courses.get_classes(course_id)
-    return render_template("show_course.html", course=course, classes=classes)
+    return render_template("show_course.html", course=course, classes=classes, review=review)
 
 @app.route("/new_course")
 def new_course():

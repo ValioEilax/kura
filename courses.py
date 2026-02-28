@@ -36,6 +36,17 @@ def get_course(course_id):
     result = db.query(sql, [course_id])
     return result[0] if result else None
 
+def get_review(course_id):
+    sql = """
+    SELECT r.id, r.course_id, r.rating, c.name
+    FROM reviews r
+    JOIN courses c ON c.id = r.course_id
+    WHERE r.course_id = ?
+    """
+    
+    result = db.query(sql, [course_id])
+    return result[0] if result else None
+
 
 def get_classes(course_id):
     sql = "SELECT title, value FROM course_classes WHERE course_id = ?"

@@ -11,10 +11,15 @@
 
   {% if session.user_id == course.user_id %}
     <p>
-      <a href="/course/{{ course.id }}/new_review" class="button">Luo arvostelu</a>
+      {% if not review %}
+        <a href="/course/{{ course.id }}/new_review" class="button">Luo arvostelu</a>
+      {% endif %}
+    </p>
+    <p>
       <a href="/edit_course/{{ course.id }}">Muokkaa kurssia</a>
       <a href="/remove_course/{{ course.id }}">Poista kurssi</a>
     </p>
+
   {% endif %}
 
   <p><strong>Koodi:</strong> {{ course.code }}</p>
@@ -32,4 +37,16 @@
       </ul>
     </div>
   {% endif %}
+
+  <p><strong>Arvostelu:</strong></p>
+  {% if review %}
+    <ul class="review-list">
+      <li class="review-item">
+        <a class="review-link" href="/course/{{ review.course_id }}/show_review">
+          {{ review.name }} {{ "★" * (review.rating | int) }}{{ "☆" * (5 - (review.rating | int)) }}
+        </a>
+  {% else %}
+        <p class="empty-state">Ei vielä arvostelua kurssista</p>
+  {% endif %}
+
 {% endblock %}
