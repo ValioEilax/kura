@@ -1,61 +1,51 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Kura</title>
-  </head>
-  <body>
-    <h1>Kura - Kurssien Rehelliset Arvostelut</h1>
-    {% if session.username %}
-    <p>
-      Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{
-      session.user_id }}
-      <p>
-        <a href="/logout">Kirjaudu ulos</a>
-      </p>
-      <p>
-        <a href="/new_course">Lisää kurssi</a>
-        <a href="/find_course">Etsi kurssi</a>
-      </p>
-    </p>
-    {% else %}
-    <p>
-      <a href="/login">Kirjaudu sisään</a>
-      <a href="/register">Luo tunnus</a>
-    </p>
-    {% endif %}
+{% extends "base.html" %}
 
+{% block title %}Kura - Kurssien Arvostelut{% endblock %}
 
-    <h2>Yhteisön suorittamia kursseja</h2>
+{% block content %}
+<header class="site-header">
+  <div class="brand">
+    <h1 class="brand-title">Kura</h1>
+    <p class="subtitle">Kurssien Rehelliset Arvostelut</p>
+  </div>
+</header>
+
+<main class="site-main">
+  <section class="section courses-section">
+    <h2 class="section-title">Yhteisön suorittamia kursseja</h2>
     {% if courses %}
-      <ul>
+      <ul class="course-list">
         {% for course in courses %}
-        <li>
-          <a href="/user/{{ course.user_id }}">{{ course.username }}</a>
-        suoritti kurssin:
-          <a href="/course/{{ course.id }}">{{ course.code }} {{ course.name }} ({{ course.credits }} op)</a>
-        </li>
+          <li class="course-item">
+            <a class="user-link" href="/user/{{ course.user_id }}">{{ course.username }}</a>
+            suoritti kurssin:
+            <a class="course-link" href="/course/{{ course.id }}">{{ course.code }} {{ course.name }} ({{ course.credits }} op)</a>
+          </li>
         {% endfor %}
       </ul>
     {% else %}
-      <p>Ei lisättyjä kursseja</p>
+      <p class="empty-state">Ei lisättyjä kursseja</p>
     {% endif %}
+  </section>
 
-        <h2>Yhteisön lisäämiä arvosteluja kursseista</h2>
+  <section class="section reviews-section">
+    <h2 class="section-title">Yhteisön lisäämiä arvosteluja kursseista</h2>
     {% if reviews %}
-      <ul>
+      <ul class="review-list">
         {% for review in reviews %}
-        <li>
-        <a href="/user/{{ review.user_id }}">{{ review.reviewer_name }}</a>
-        antoi kurssille
-        <a href="/course/{{ review.course_id }}/show_review">
-          {{ review.course_name }}
-          {{ "★" * (review.rating) }}{{ "☆" * (5 - (review.rating)) }}
-      </li>
+          <li class="review-item">
+            <a class="user-link" href="/user/{{ review.user_id }}">{{ review.reviewer_name }}</a>
+            antoi kurssille
+            <a class="review-link" href="/course/{{ review.course_id }}/show_review">
+              {{ review.course_name }}
+              {{ "★" * (review.rating | int) }}{{ "☆" * (5 - (review.rating | int)) }}
+            </a>
+          </li>
         {% endfor %}
       </ul>
     {% else %}
-      <p>Ei vielä arvosteluja kursseista</p>
+      <p class="empty-state">Ei vielä arvosteluja kursseista</p>
     {% endif %}
-  </body>
-</html>
-
+  </section>
+</main>
+{% endblock %}
