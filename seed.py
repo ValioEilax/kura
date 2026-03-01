@@ -3,10 +3,10 @@ import random
 import time
 
 def fill():
-    # Connect directly using sqlite3
+
     db = sqlite3.connect("database.db")
 
-    # Optimization for massive inserts
+
     db.execute("PRAGMA synchronous = OFF")
     db.execute("PRAGMA journal_mode = MEMORY")
 
@@ -29,7 +29,7 @@ def fill():
     for i in range(1, user_count + 1):
         users.append((f"user{i}", "password123"))
 
-    # FIX: Use executemany for the list of tuples
+
     db.executemany("INSERT INTO users (username, password_hash) VALUES (?, ?)", users)
 
     # 2. Create Courses
@@ -40,7 +40,7 @@ def fill():
         courses_list.append((f"Course {i}", f"TKT{i}", 3, 5, random.randint(1, user_count)))
 
         if i % 10000 == 0:
-            # FIX: Use executemany
+
             db.executemany("INSERT INTO courses (name, code, grade, credits, user_id) VALUES (?, ?, ?, ?, ?)", courses_list)
             courses_list = []
             print(f" Progress: {i}/{course_count}", end="\r")
@@ -59,7 +59,7 @@ def fill():
         ))
 
         if i % 10000 == 0:
-            # FIX: Use executemany
+
             db.executemany("""INSERT INTO reviews (course_id,user_id, difficulty, workload, rating, feedback)
                               VALUES (?, ?, ?, ?, ?, ?)""",reviews_list)
             reviews_list = []
@@ -76,7 +76,7 @@ def fill():
         ))
 
         if i % 25000 == 0:
-            # FIX: Use executemany
+
             db.executemany("INSERT INTO comments (review_id, user_id, content) VALUES (?, ?, ?)", comments_list)
             comments_list = []
             print(f" Progress: {i}/{comment_count}", end="\r")
