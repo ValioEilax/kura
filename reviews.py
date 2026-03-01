@@ -104,3 +104,22 @@ def get_comment_by_id(comment_id):
 def remove_comment(comment_id, user_id):
     sql = "DELETE FROM comments WHERE id = ? AND user_id = ?"
     db.execute(sql, [comment_id, user_id])
+
+
+def count_reviews():
+    sql = "SELECT COUNT(*) FROM reviews"
+    result = db.query(sql)
+    return result[0][0] if result else 0
+
+def get_reviews_paginated(limit, offset):
+    sql = """
+        SELECT r.id, r.rating,
+               u.id AS user_id, u.username AS reviewer_name,
+               c.id AS course_id, c.name AS course_name
+        FROM reviews r
+        JOIN users u ON r.user_id = u.id
+        JOIN courses c ON r.course_id = c.id
+        ORDER BY r.id DESC
+        LIMIT ? OFFSET ?
+    """
+    return db.query(sql, [limit, offset])

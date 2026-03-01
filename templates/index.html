@@ -16,6 +16,21 @@
           </li>
         {% endfor %}
       </ul>
+      
+      <div class="pagination">
+        {% if c_page > 1 %}
+          <a href="/c/1/r/{{ r_page }}">Alkuun</a>
+          <a href="/c/{{ c_page - 1 }}/r/{{ r_page }}">Edellinen</a>
+        {% endif %}
+        
+        <span>Sivu {{ c_page }} / {{ c_pages }}</span>
+        
+        {% if c_page < c_pages %}
+          <a href="/c/{{ c_page + 1 }}/r/{{ r_page }}">Seuraava</a>
+          <a href="/c/{{ c_pages }}/r/{{ r_page }}">Loppuun</a>
+        {% endif %}
+      </div>
+      
     {% else %}
       <p class="empty-state">Ei lisättyjä kursseja</p>
     {% endif %}
@@ -36,6 +51,22 @@
           </li>
         {% endfor %}
       </ul>
+
+      <div class="pagination">
+        {% if r_page > 1 %}
+          <a href="/c/{{ c_page }}/r/1">Alkuun</a>
+          <a href="/c/{{ c_page }}/r/{{ r_page - 1 }}">Edellinen</a>
+        {% endif %}
+        
+        <span>Sivu {{ r_page }} / {{ r_pages }}</span>
+        
+        {% if r_page < r_pages %}
+          <a href="/c/{{ c_page }}/r/{{ r_page + 1 }}">Seuraava</a>
+          <a href="/c/{{ c_page }}/r/{{ r_pages }}">Loppuun</a>
+        {% endif %}
+      </div>
+
+
     {% else %}
       <p class="empty-state">Ei vielä arvosteluja kursseista</p>
     {% endif %}

@@ -96,3 +96,19 @@ def find_courses(query):
 
     pattern = "%" + query + "%"
     return db.query(sql, [pattern, pattern, pattern])
+
+def count_courses():
+    sql = "SELECT COUNT(*) FROM courses"
+    result = db.query(sql)
+
+    return result[0][0] if result else 0
+
+def get_courses_paginated(limit, offset):
+    sql = """
+        SELECT c.id, c.code, c.name, c.credits, u.id AS user_id, u.username
+        FROM courses c
+        JOIN users u ON c.user_id = u.id
+        ORDER BY c.id DESC
+        LIMIT ? OFFSET ?
+    """
+    return db.query(sql, [limit, offset])

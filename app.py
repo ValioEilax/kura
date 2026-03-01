@@ -1,12 +1,16 @@
 import sqlite3
 import re
+import math
+import time
 from flask import Flask
-from flask import redirect, render_template, request, session, flash, abort
+from flask import redirect, render_template, request, session, flash, abort, g
 from flask_wtf.csrf import CSRFProtect, CSRFError
 import config
 import courses
 import reviews
 import users
+
+
 
 
 app = Flask(__name__)
@@ -22,12 +26,47 @@ def require_login():
     if "user_id" not in session:
         abort(403)
 
+PER_PAGE_COURSES = 5
+PER_PAGE_REVIEWS = 5
 
 @app.route("/")
-def index():
-    all_courses = courses.get_courses()
-    all_reviews = reviews.get_reviews()
-    return render_template("index.html", courses=all_courses, reviews=all_reviews)
+def index_root():
+    return redirect("/c/1/r/1")
+
+@app.route("/c/<int:c_page>/r/<int:r_page>")
+def index(c_page=1, r_page=1):
+
+    c_page = max(1, c_page)
+    r_page = max(1, r_page)
+
+    total_courses = courses.count_courses()
+    total_reviews = reviews.count_reviews()
+
+    c_pages = max(1, math.ceil(total_courses / PER_PAGE_COURSES)) if total_courses else 1
+    r_pages = max(1, math.ceil(total_reviews / PER_PAGE_REVIEWS)) if total_reviews else 1
+
+    # Redirect out-of-range to nearest valid
+    if c_page > c_pages:
+        return redirect(f"/c/{c_pages}/r/{r_page}")
+    if r_page > r_pages:
+        return redirect(f"/c/{c_page}/r/{r_pages}")
+
+
+    c_offset = (c_page - 1) * PER_PAGE_COURSES
+    r_offset = (r_page - 1) * PER_PAGE_REVIEWS
+
+    # Fetch
+    page_courses = courses.get_courses_paginated(PER_PAGE_COURSES, c_offset)
+    page_reviews = reviews.get_reviews_paginated(PER_PAGE_REVIEWS, r_offset)
+
+    return render_template(
+        "index.html",
+        courses=page_courses,
+        reviews=page_reviews,
+        c_page=c_page, c_pages=c_pages,
+        r_page=r_page, r_pages=r_pages
+    )
+
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
