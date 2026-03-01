@@ -44,4 +44,6 @@ CREATE TABLE comments (
     user_id INTEGER REFERENCES users ON DELETE CASCADE,
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
+
+CREATE INDEX idx_review_comments ON comments (review_id);
