@@ -74,7 +74,7 @@ def update_course(course_id, name, code, grade, credits, classes):
 
     sql = "DELETE FROM course_classes WHERE course_id = ?"
     db.execute(sql, [course_id])
-    
+
     sql = "INSERT INTO course_classes (course_id, title, value)VALUES (?, ?, ?)"
     for title, value in classes:
         db.execute(sql, [course_id, title, value])

@@ -5,12 +5,16 @@ def user_has_reviewed(course_id, user_id):
         "SELECT 1 FROM reviews WHERE course_id = ? AND user_id = ? LIMIT 1",
         [course_id, user_id]
     )
-    
+
     return len(rows) > 0
 
 
 def add_review(course_id, user_id, difficulty, workload, rating, feedback):
-    sql = "INSERT INTO reviews (course_id, user_id, difficulty, workload, rating, feedback) VALUES (?, ?, ?, ?, ?, ?)"
+    sql = """
+    INSERT INTO reviews 
+        (course_id, user_id, difficulty, workload, rating, feedback)
+    VALUES (?, ?, ?, ?, ?, ?)
+    """
     db.execute(sql, [course_id, user_id, difficulty, workload, rating, feedback])
 
 
@@ -61,7 +65,7 @@ def get_review_by_id(review_id):
 
 def remove_review(review_id):
     sql = "DELETE FROM reviews WHERE id = ?"
-    db.execute(sql, [review_id])   
+    db.execute(sql, [review_id])
 
 
 def update_review(review_id, difficulty, workload, rating, feedback):
