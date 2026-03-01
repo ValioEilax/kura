@@ -37,9 +37,9 @@ Tämä lista yhdistää kurssimateriaalin esimerkkisovelluksen osat ja projektin
 - [x] **Osa 8:** Oikeuksien tarkastaminen (CRUD-logiikan varmistus)
 - [x] **Osa 9:** Tiedon löytymisen tarkastaminen (Virheiden käsittely)
 - [x] **Osa 23:** Virheviestien parantaminen (Flash-viestit käyttäjälle)
-- [ ] **Osa 24:** CSRF-aukon estäminen (Token-pohjainen suojaus)
+- [x] **Osa 24:** CSRF-aukon estäminen (Token-pohjainen suojaus)
 
 ## 8. Viimeistely ja palautus
 - [x] **Osa 20-21:** Ulkoasun yhtenäistäminen (Base template) ja CSS-tyylit
-- [ ] **Osa 25:** Käytettävyyden parantaminen (Navigaatio ja sivutus)
-- [ ] **Osa 26:** Lopullinen README.md, Pylint-tarkistus ja testausraportti
+- [x] **Osa 25:** Käytettävyyden parantaminen (Navigaatio ja sivutus)
+- [x] **Osa 26:** Lopullinen README.md, Pylint-tarkistus ja testausraportti
