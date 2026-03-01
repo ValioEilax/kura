@@ -1,10 +1,12 @@
 import sqlite3
+import re
 from flask import Flask
 from flask import redirect, render_template, request, session, flash, abort
 from flask_wtf.csrf import CSRFProtect, CSRFError
 import config
-import db, courses, reviews, users
-import re
+import courses
+import reviews
+import users
 
 
 app = Flask(__name__)
@@ -12,8 +14,8 @@ app.secret_key = config.secret_key
 csrf = CSRFProtect(app)
 
 @app.errorhandler(CSRFError)
-def handle_csrf_error(e):
-    return render_template('csrf_error.html', reason=e.description), 400
+def handle_csrf_error(error):
+    return render_template('csrf_error.html', reason=error.description), 400
 
 
 def require_login():
@@ -32,9 +34,9 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    courses = users.get_courses(user_id)
-    reviews = users.get_reviews(user_id)
-    return render_template("show_user.html", user=user, courses=courses, reviews=reviews)
+    user_courses = users.get_courses(user_id)
+    user_reviews = users.get_reviews(user_id)
+    return render_template("show_user.html", user=user, courses=user_courses, reviews=user_reviews)
 
 @app.route("/find_course")
 def find_course():
@@ -50,7 +52,7 @@ def find_course():
 def show_course(course_id):
     course = courses.get_course(course_id)
     review = courses.get_review(course_id)
-    
+
     if not course:
         abort(404)
     classes = courses.get_classes(course_id)
@@ -67,13 +69,13 @@ def new_course():
 @app.route("/create_course", methods=["POST"])
 def create_course():
     require_login()
-    
+
 
     name = request.form["name"]
-    if not name or len(name) > 50: 
+    if not name or len(name) > 50:
         abort(403)
     code = request.form["code"]
-    credits = request.form["credits"]
+    course_credits = request.form["credits"]
     grade = request.form["grade"]
     user_id = session["user_id"]
 
@@ -89,7 +91,7 @@ def create_course():
                 abort(403)
             classes.append((title, value))
 
-    courses.add_course(name, code, grade, credits, user_id, classes)
+    courses.add_course(name, code, grade, course_credits, user_id, classes)
 
     return redirect("/")
 
@@ -107,9 +109,8 @@ def update_course():
 
     name = request.form["name"]
     code = request.form["code"]
-    credits = request.form["credits"]
+    course_credits = request.form["credits"]
     grade = request.form["grade"]
-    user_id = session["user_id"]
 
     all_classes = courses.get_all_classes()
 
@@ -123,7 +124,7 @@ def update_course():
                 abort(403)
             classes.append((title, value))
 
-    courses.update_course(course_id, name, code, grade, credits, classes)
+    courses.update_course(course_id, name, code, grade, course_credits, classes)
 
     return redirect("/course/" + str(course_id))
 
@@ -145,7 +146,10 @@ def edit_course(course_id):
     for entry in courses.get_classes(course_id):
         classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_course.html", course=course, classes=classes, all_classes=all_classes)
+    return render_template("edit_course.html",
+                           course=course,
+                           classes=classes,
+                           all_classes=all_classes)
 
 
 @app.route("/remove_course/<int:course_id>", methods=["GET", "POST"])
@@ -191,7 +195,7 @@ def create():
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
         flash("VIRHE: Valitsemasi tunnus on jo varattu")
-        return render_template("register.html")       
+        return render_template("register.html")
 
     flash("Tunnus luotu onnistuneesti! Voit nyt kirjautua sisään.")
     return redirect("/login")
@@ -210,7 +214,7 @@ def login():
             session["user_id"] = user_id
             session["username"] = username
             return redirect("/")
-        else:            
+        else:
             flash("VIRHE: väärä tunnus tai salasana")
             return render_template("login.html")
 

@@ -13,9 +13,9 @@ def add_course(name, code, grade, credits, user_id, classes):
 
 def get_courses():
     sql = """
-        SELECT courses.id, courses.name, courses.code, courses.credits, users.username, user_id 
-        FROM courses 
-        JOIN users ON courses.user_id = users.id 
+        SELECT courses.id, courses.name, courses.code, courses.credits, users.username, user_id
+        FROM courses
+        JOIN users ON courses.user_id = users.id
         ORDER BY courses.id DESC
     """
     return db.query(sql)
@@ -43,7 +43,7 @@ def get_review(course_id):
     JOIN courses c ON c.id = r.course_id
     WHERE r.course_id = ?
     """
-    
+
     result = db.query(sql, [course_id])
     return result[0] if result else None
 
@@ -67,22 +67,22 @@ def get_all_classes():
 
 
 def update_course(course_id, name, code, grade, credits, classes):
-    sql = """UPDATE courses 
-             SET name = ?, code = ?, grade = ?, credits = ? 
+    sql = """UPDATE courses
+             SET name = ?, code = ?, grade = ?, credits = ?
              WHERE id = ?"""
     db.execute(sql, [name, code, grade, credits, course_id])
 
     sql = "DELETE FROM course_classes WHERE course_id = ?"
     db.execute(sql, [course_id])
     
-    sql = "INSERT INTO course_classes (course_id, title, value) VALUES (?, ?, ?)"
+    sql = "INSERT INTO course_classes (course_id, title, value)VALUES (?, ?, ?)"
     for title, value in classes:
         db.execute(sql, [course_id, title, value])
 
 
 def remove_course(course_id):
     sql = "DELETE FROM courses WHERE id = ?"
-    db.execute(sql, [course_id])   
+    db.execute(sql, [course_id])
 
 
 def find_courses(query):
